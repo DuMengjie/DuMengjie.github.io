@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        DuMengjie&#39;s blog
+        CSS实现折叠面板｜DuMengjie&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://dumengjie.github.io/2017/01/14/如何高效学习/">
+    <link rel="canonical" href="http://dumengjie.github.io/2017/03/04/CSS实现折叠面板/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -136,13 +136,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png">
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -153,15 +153,21 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1></h1>
+                    <h1>CSS实现折叠面板</h1>
                     
                     <span class="meta">
                          作者 杜梦杰
                         <span>
-                          日期 2017-01-14
+                          日期 2017-03-04
                          </span>
                     </span>
                     <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
                         
                     </div>
                 </div>
@@ -170,7 +176,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            
+            CSS实现折叠面板
         </span>
     </div>
 </header>
@@ -181,17 +187,36 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>效果展示</strong></p>
+<iframe style="width: 100%; height: 320px" src="http://sandbox.runjs.cn/show/yezsxygu" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<p>折叠面板是网页中常见的效果之一，在<code>jQuery UI</code>和<code>Bootstrap</code>中都有相关的实现，但都需要依赖js。如果不想引入js代码，其实纯CSS也可以实现，只是功能上有些简化。</p>
+<p>具体的实现方法总结了两种，第一种使用<code>radio</code>控件模拟，第二种使用CSS3的<code>:target伪类</code>。</p>
+<h2 id="Radio实现"><a href="#Radio实现" class="headerlink" title="Radio实现"></a>Radio实现</h2><p><code>name</code>值相同的单选按钮，在同一时间只能有一个被选中，利用这一特性便可以实现折叠菜单。首先将<code>label标签</code>和<code>input按钮</code>绑定，然后隐藏<code>input</code>，点击<code>label标签</code>，相应<code>input</code>被选中，再利用<code>:checked伪类</code>和相邻兄弟选择器使相应div显示即可。</p>
+<p><strong>HTML</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"menuItem"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"item1"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>商业平台学院<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"item"</span> <span class="attr">id</span>=<span class="string">"item1"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"detail"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>商业平台学院是百度商业体系最大的前端团队，所在部门主要负责百度核心商业产品推广平台的建设，包括搜索推广和信息流推广，是公司绝大部分收入的来源。学院不仅提供Web前端、还有iOS、Android方向供大家学习。商业平台学院欢迎你的到来！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"menuItem"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"menuItem"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>CSS</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.menuItem</span> <span class="selector-tag">label</span> + <span class="selector-tag">input</span> &#123; <span class="comment">/*input隐藏*/</span></div><div class="line">  <span class="attribute">display</span>: none; </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.menuItem</span> <span class="selector-class">.detail</span> &#123; <span class="comment">/*.detail隐藏*/</span></div><div class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">overflow</span>: hidden;</div><div class="line">  <span class="attribute">transition</span>: height <span class="number">0.3s</span> ease;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.menuItem</span> <span class="selector-tag">input</span><span class="selector-pseudo">:checked</span> + <span class="selector-tag">detail</span> &#123; <span class="comment">/*input选中时，相应detail显示*/</span></div><div class="line">  <span class="attribute">height</span>: <span class="number">120px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="target伪类实现"><a href="#target伪类实现" class="headerlink" title=":target伪类实现"></a>:target伪类实现</h2><p>目标伪类选择器<a href="http://www.w3school.com.cn/cssref/selector_target.asp" target="_blank" rel="external">:targrt</a>是众多实用的CSS3特性之一，它会选取链接<code>a标签</code>的目标元素。既然如此，那我们只需要给内容容器指定id，将<code>a标签</code>链接到这些容器即可动态的修改属性。</p>
+<p><strong>HTML</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"menuItem"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#item1"</span>&gt;</span>商业平台学院<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"item1"</span>&gt;</span>商业平台学院是百度商业体系最大的前端团队，所在部门主要负责百度核心商业产品推广平台的建设，包括搜索推广和信息流推广，是公司绝大部分收入的来源。学院不仅提供Web前端、还有iOS、Android方向供大家学习。商业平台学院欢迎你的到来！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"menuItem"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"menuItem"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>CSS</strong></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.menuItem</span> <span class="selector-tag">p</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">overflow</span>: hidden;</div><div class="line">  <span class="attribute">transition</span>: height <span class="number">0.5s</span> ease;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.menuItem</span> <span class="selector-tag">p</span><span class="selector-pseudo">:target</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">120px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>利用CSS3强大的选择器可以实现很多神奇的效果，但是这两种实现方法仍有一些缺陷，例如：任意时刻必有一个菜单项是展开状态，单击同一菜单项无法实现隐藏/展示状态切换，无法自适应高度，只能设置固定高度等等。但这两种方法足以应对大多数情况了，以后如果有机会会再进行优化的。</p>
+
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/01/14/如何高效学习/"
-                     data-title=""
-                     data-url="http://dumengjie.github.io/2017/01/14/如何高效学习/"
-                     data-images=""
-                     data-content=" | DuMengjie&#39;s blog ">
+                     data-thread-key="2017/03/04/CSS实现折叠面板/"
+                     data-title="CSS实现折叠面板"
+                     data-url="http://dumengjie.github.io/2017/03/04/CSS实现折叠面板/"
+                     data-images="http://dumengjie.github.io/2017/03/04/CSS实现折叠面板/article-bg7.jpg"
+                     data-content="前言效果展示
+
+
+折叠面板是网页中常见的效果之一，在jQuery UI和Bootstrap中都... | DuMengjie&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -209,15 +234,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/02/13/元素的水平及垂直居中/" data-toggle="tooltip" data-placement="top"
-                           title="元素的水平及垂直居中">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/01/11/精进——如何成为一个很厉害的人/" data-toggle="tooltip" data-placement="top"
-                           title="精进——如何成为一个很厉害的人">Next Post &rarr;</a>
+                        <a href="/2017/02/21/网页加载动画/" data-toggle="tooltip" data-placement="top"
+                           title="网页加载动画">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -226,9 +246,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/01/14/如何高效学习/"
-                         data-title=""
-                         data-url="http://dumengjie.github.io/2017/01/14/如何高效学习/">
+                         data-thread-key="2017/03/04/CSS实现折叠面板/"
+                         data-title="CSS实现折叠面板"
+                         data-url="http://dumengjie.github.io/2017/03/04/CSS实现折叠面板/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -240,7 +260,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Radio实现"><span class="toc-text">Radio实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#target伪类实现"><span class="toc-text">:target伪类实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -261,6 +281,12 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
                         
                     </div>
                 </section>
