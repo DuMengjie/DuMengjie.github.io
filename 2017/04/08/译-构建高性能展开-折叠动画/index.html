@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        [译]构建高性能展开&amp;折叠动画｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2017/04/08/译-构建高性能展开-折叠动画/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>[译]构建高性能展开&amp;折叠动画</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2017-04-08
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            [译]构建高性能展开&折叠动画
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>原文地址：<a href="https://developers.google.com/web/updates/2017/03/performant-expand-and-collapse" target="_blank" rel="external">https://developers.google.com/web/updates/2017/03/performant-expand-and-collapse</a></p>
+<p>原文标题：Building performant expand &amp; collapse animations</p>
+<p>原文作者：<a href="https://developers.google.com/web/resources/contributors#paullewis" target="_blank" rel="external">Paul Lewis</a>, <a href="https://developers.google.com/web/resources/contributors#smcgruer" target="_blank" rel="external">Stephen McGruer</a></p>
+<p>翻译：杜梦杰</p>
+<p>示例：<a href="https://dumengjie.github.io/blog-examples/animated-clip/">https://dumengjie.github.io/blog-examples/animated-clip/</a></p>
+</blockquote>
+<p><strong>TL;DR</strong></p>
+<p>进行动画操作时使用<code>scale</code>变换（即<code>transform: scale</code>）。通过限制缩放来阻止子元素在动画过程中变形。</p>
+<p>我们之前已经发布过高性能视差滚动和无限滚动效果的文章。本文将讨论如何创建高性能的裁剪动画（<a href="https://github.com/GoogleChrome/ui-element-samples/tree/gh-pages/animated-clip" target="_blank" rel="external">Github repo</a>）。</p>
+<p>以展开菜单为例：</p>
+<p><img src="menu.gif" alt="menu"></p>
+<p>某些制作展开菜单的方法比其他方法更加高性能。</p>
+<h2 id="Bad-动画操作容器元素的宽高"><a href="#Bad-动画操作容器元素的宽高" class="headerlink" title="Bad: 动画操作容器元素的宽高"></a>Bad: 动画操作容器元素的宽高</h2><p>你可以想到用CSS来操作容器元素的宽度<code>width</code>和高度<code>height</code>。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.menu</span> &#123;</div><div class="line">  <span class="attribute">overflow</span>: hidden;</div><div class="line">  <span class="attribute">width</span>: <span class="number">350px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">600px</span>;</div><div class="line">  <span class="attribute">transition</span>: width <span class="number">600ms</span> ease-out, height <span class="number">600ms</span> ease-out;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.menu--collapsed</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">60px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法的问题是要求动画操作宽度<code>width</code>和高度<code>height</code>。这些属性要求每帧都要计算布局并绘制结果，这是非常耗费性能的并且通常会使帧率低于60fps。如果你不了解这些知识，可以阅读我们的<a href="https://developers.google.com/web/fundamentals/performance/rendering/" target="_blank" rel="external">渲染性能</a><code>Rendering Performance</code>指导，以便更好的了解渲染过程。</p>
+<h2 id="Bad-使用-CSS-clip-或-clip-path-属性"><a href="#Bad-使用-CSS-clip-或-clip-path-属性" class="headerlink" title="Bad: 使用 CSS clip 或 clip-path 属性"></a>Bad: 使用 CSS clip 或 clip-path 属性</h2><p>一种替代方法是使用<code>clip</code>属性（不赞成使用）来实现展开和折叠效果。如果你喜欢的话也可以使用<code>clip-path</code>。但是<code>clip-path</code>的支持性比<code>clip</code>差。但是不建议使用<code>clip</code>属性。是很纠结，但是不要失望，这并不是你想要的解决方法。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.menu</span> &#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">clip</span>: <span class="built_in">rect</span>(0px 112px 175px 0px);</div><div class="line">  <span class="attribute">transition</span>: clip <span class="number">600ms</span> ease-out;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.menu--collapsed</span> &#123;</div><div class="line">  <span class="attribute">clip</span>: <span class="built_in">rect</span>(0px 70px 34px 0px);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>尽管这种方法比操作宽度<code>width</code>和高度<code>height</code>更好，但是缺点是仍旧会触发重绘。同时，如果你使用<code>clip</code>属性，要求元素必须是绝对定位<code>absolute</code>或固定定位<code>fixed</code>，这也会造成一些额外的问题。</p>
+<h2 id="Good-动画缩放"><a href="#Good-动画缩放" class="headerlink" title="Good: 动画缩放"></a>Good: 动画缩放</h2><p>由于这个效果涉及到元素的缩放，你可以使用<code>scale</code>变换。改变<code>transform</code>并不要求改变布局或重新绘制，这是极好的，并且浏览器可以把这些改变交给GPU来处理，这就意味着变换效果会被加速并很有可能达到60fps。</p>
+<p>这种方法的缺点嘛，就和渲染性能<code>Rendering Performance</code>的很多东西一样，需要一些准备工作。但绝对是值得的！</p>
+<h3 id="Step-1-计算出初始状态和结束状态"><a href="#Step-1-计算出初始状态和结束状态" class="headerlink" title="Step 1: 计算出初始状态和结束状态"></a>Step 1: 计算出初始状态和结束状态</h3><p>使用这种缩放动画的方法，第一步就是要知道元素展开和收缩时的尺寸。有些情况下你不能一次就得到所有信息，此时你需要切换不同的类来获取元素的不同状态。如果你这样做的话，需要注意一点：如果与上次运行相比，样式<code>style</code>发生了改变，<code>getBoundingClientRect()</code>(或<code>offsetWidth</code>和<code>offsetHeight</code>)会强制浏览器更新样式和布局<code>styles and layout</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">calculateCollapsedScale</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// The menu title can act as the marker for the collapsed state.</span></div><div class="line">  <span class="keyword">const</span> collapsed = menuTitle.getBoundingClientRect();</div><div class="line"></div><div class="line">  <span class="comment">// Whereas the menu as a whole (title plus items) can act as</span></div><div class="line">  <span class="comment">// a proxy for the expanded state.</span></div><div class="line">  <span class="keyword">const</span> expanded = menu.getBoundingClientRect();</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">x</span>: collapsed.width / expanded.width,</div><div class="line">    <span class="attr">y</span>: collapsed.height / expanded.height</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果操作目标是菜单这样的对象，我们可以合理假设它的初始状态就是自然比例(1,1)。这个自然比例代表展开状态，这意味着需要从缩小的状态（上面计算出来的）回到自然比例。</p>
+<p>但是，这种方法也会缩放菜单的内容。如下图所示：</p>
+<p><img src="scale-menu.gif" alt="scale-menu"></p>
+<p>我们应该怎么做呢？你可以为内容应用<code>counter-transform</code>，例如容器缩小到原始尺寸的1/5，你可以把内容放大5倍来避免内容被挤压。</p>
+<p>有两点需要注意：</p>
+<ol>
+<li><strong><code>counter-transform</code>也是一种缩放操作。</strong>就像容器上的动画一样，它也可以被加速。需要确保动画操作的元素有自己的<code>compositor layer</code>，为了这一点可以为元素添加<code>will-change: transform</code>，如果你需要支持旧版浏览器，添加<code>backface-visibility: hiddden</code>。</li>
+<li><strong><code>counter-transform</code>每一帧都必须计算。</strong>这里就有点棘手了，假设动画是在CSS中且使用了缓动函数<code>easing function</code>，在进行<code>counter-transform</code>操作时缓动函数本身也需要抵消。但是，计算出反曲线，例如<code>cubic-bezier(0, 0, 0.3, 1)</code>，并不是那么简单。</li>
+</ol>
+<p>使用JavaScript来实现这个动画效果确实很诱人。毕竟，这样的话你就可以使用一个缓动方程来计算出每一帧缩放和反缩放<code>scale and counter-scale</code>的值。当主线程忙碌时就会体现出所有基于JavaScript的动画的缺点，你的动画会阻塞在一起，这对用户体验很不好。</p>
+<h3 id="Step-2-动态创建CSS动画"><a href="#Step-2-动态创建CSS动画" class="headerlink" title="Step 2: 动态创建CSS动画"></a>Step 2: 动态创建CSS动画</h3><p>解决方法看起来可能有些奇怪，就是使用缓动函数动态的创建关键帧动画<code>keyframed animation</code>并注入到页面中让菜单使用。这种方法的主要好处是关键帧动画实现的变形可以运行在<code>compositor</code>上，不会被主线程上的任务所干扰。</p>
+<p>为了制作关键帧动画，我们计算出从0%到100%之间元素及其内容所需要的缩放值。这些关键帧动画可以压缩为一个字符串作为一个<code>style element</code>注入到页面中。注入样式会导致页面重新计算样式<code>Recalculate Styles</code>，这个额外工作是浏览器必须做的，但只会在组件启动时运行一次。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createKeyframeAnimation</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Figure out the size of the element when collapsed.</span></div><div class="line">  <span class="keyword">let</span> &#123;x, y&#125; = calculateCollapsedScale();</div><div class="line">  <span class="keyword">let</span> animation = <span class="string">''</span>;</div><div class="line">  <span class="keyword">let</span> inverseAnimation = <span class="string">''</span>;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> step = <span class="number">0</span>; step &lt;= <span class="number">100</span>; step++) &#123;</div><div class="line">    <span class="comment">// Remap the step value to an eased one.</span></div><div class="line">    <span class="keyword">let</span> easedStep = ease(step / <span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Calculate the scale of the element.</span></div><div class="line">    <span class="keyword">const</span> xScale = x + (<span class="number">1</span> - x) * easedStep;</div><div class="line">    <span class="keyword">const</span> yScale = y + (<span class="number">1</span> - y) * easedStep;</div><div class="line"></div><div class="line">    animation += <span class="string">`<span class="subst">$&#123;step&#125;</span>% &#123;</span></div><div class="line">      transform: scale(<span class="subst">$&#123;xScale&#125;</span>, <span class="subst">$&#123;yScale&#125;</span>);</div><div class="line">    &#125;`;</div><div class="line"></div><div class="line">    <span class="comment">// And now the inverse for the contents.</span></div><div class="line">    <span class="keyword">const</span> invXScale = <span class="number">1</span> / xScale;</div><div class="line">    <span class="keyword">const</span> invYScale = <span class="number">1</span> / yScale;</div><div class="line">    inverseAnimation += <span class="string">`<span class="subst">$&#123;step&#125;</span>% &#123;</span></div><div class="line">      transform: scale(<span class="subst">$&#123;invXScale&#125;</span>, <span class="subst">$&#123;invYScale&#125;</span>);</div><div class="line">    &#125;`;</div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="string">`</span></div><div class="line">  @keyframes menuAnimation &#123;</div><div class="line">    <span class="subst">$&#123;animation&#125;</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @keyframes menuContentsAnimation &#123;</div><div class="line">    <span class="subst">$&#123;inverseAnimation&#125;</span></div><div class="line">  &#125;`;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你可能会对for循环里的<code>ease()</code>函数非常好奇。你可以使用类似这样的函数来使从0到1的值转化为对应的过渡值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ease</span> (<span class="params">v, pow=<span class="number">4</span></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="number">1</span> - <span class="built_in">Math</span>.pow(<span class="number">1</span> - v, pow);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你需要其他的缓动方程，请点击<a href="https://github.com/tweenjs/tween.js/blob/master/src/Tween.js#L421-L737" target="_blank" rel="external">Tween.js by Soledad Penadés</a>，上面有很多资源。</p>
+<h3 id="Step-3-激活CSS动画"><a href="#Step-3-激活CSS动画" class="headerlink" title="Step 3: 激活CSS动画"></a>Step 3: 激活CSS动画</h3><p>动画已经被创建好并放到页面中了，最后一步就是切换类<code>toggle class</code>来激活动画。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.menu--expanded</span> &#123;</div><div class="line">  <span class="attribute">animation-name</span>: menuAnimation;</div><div class="line">  <span class="attribute">animation-duration</span>: <span class="number">0.2s</span>;</div><div class="line">  <span class="attribute">animation-timing-function</span>: linear;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.menu__contents--expanded</span> &#123;</div><div class="line">  <span class="attribute">animation-name</span>: menuContentsAnimation;</div><div class="line">  <span class="attribute">animation-duration</span>: <span class="number">0.2s</span>;</div><div class="line">  <span class="attribute">animation-timing-function</span>: linear;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样上一步创建的动画就会展现出来啦。由于关键帧动画已经是缓动的了，所以时间函数<code>timing function</code>需要设置为线性<code>linear</code>，否则每帧之间都有缓动看起来会非常的奇怪。</p>
+<p>当菜单收缩的时候有两种方法：反向运行CSS动画。这样是没什么问题，但是感觉就像是展开动画的倒放，如果展开时使用了缓出<code>ease-out</code>，那收缩就是缓入<code>ease-in</code>，看起来相当迟缓。更加合适的解决方法是为收缩创造第二套动画。和创建展开关键帧动画的步骤一样，只是交换了开始值和结束值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> xScale = <span class="number">1</span> + (x - <span class="number">1</span>) * easedStep;</div><div class="line"><span class="keyword">const</span> yScale = <span class="number">1</span> + (y - <span class="number">1</span>) * easedStep;</div></pre></td></tr></table></figure>
+<h2 id="高级版本-圆形菜单"><a href="#高级版本-圆形菜单" class="headerlink" title="高级版本: 圆形菜单"></a>高级版本: 圆形菜单</h2><p>使用这种方法也可以实现圆形展开和收缩动画。</p>
+<p><img src="circle-menu.gif" alt="circle-menu"></p>
+<p>和上个版本的原则一样，你可以缩放一个元素，反缩放它的子元素。在这个例子中缩放的元素拥有属性<code>border-radius: 50%</code>，把它变成一个圆，并被一个拥有属性`overflow: hidden;的父元素包裹，意味着你看不到该父元素之外的圆圈放大的部分。</p>
+<p>这种方法一个警告：在动画过程中，Chrome浏览器在低DPI屏幕上文字会模糊，这是由于缩放文字会引起舍入误差<code>rounding error</code>。想了解更多细节请<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=704067" target="_blank" rel="external">点击</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>现在你了解了一种构建高性能展开折叠动画的方法。如果动画可以加速那就更完美了，我们在操作<code>clip</code>和<code>clip-path</code>要多加注意，同时杜绝动画变换宽高。</p>
+<p>对于这种特效使用<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API" target="_blank" rel="external">Web Animations</a>也是非常方便的，虽然拥有<code>JavaScript API</code>，但如果你只操作<code>transform</code>和<code>opacity</code>的话，它也可以运行在<code>compositor thread</code>上。很可惜<code>Web Animations</code>的支持性并不是很好，不过你可以以渐进增强的方法来使用它。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="string">'animate'</span> <span class="keyword">in</span> HTMLElement.prototype) &#123;</div><div class="line">  <span class="comment">// Animate with Web Animations.</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="comment">// Fall back to generated CSS Animations or JS.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在你仍可以使用JS库<code>JavaScript-based library</code>来实现动画，但你会发现注入CSS动画会有更加可靠的性能。</p>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/04/08/译-构建高性能展开-折叠动画/"
+                     data-title="[译]构建高性能展开&amp;折叠动画"
+                     data-url="http://dumengjie.github.io/2017/04/08/译-构建高性能展开-折叠动画/"
+                     data-images="http://dumengjie.github.io/2017/04/08/译-构建高性能展开-折叠动画/article-bg7.jpg"
+                     data-content="
+原文地址：https://developers.google.com/web/updates... | DuMengjie&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/04/CSS实现折叠面板/" data-toggle="tooltip" data-placement="top"
+                           title="CSS实现折叠面板">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/04/08/译-构建高性能展开-折叠动画/"
+                         data-title="[译]构建高性能展开&amp;折叠动画"
+                         data-url="http://dumengjie.github.io/2017/04/08/译-构建高性能展开-折叠动画/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bad-动画操作容器元素的宽高"><span class="toc-text">Bad: 动画操作容器元素的宽高</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bad-使用-CSS-clip-或-clip-path-属性"><span class="toc-text">Bad: 使用 CSS clip 或 clip-path 属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Good-动画缩放"><span class="toc-text">Good: 动画缩放</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-计算出初始状态和结束状态"><span class="toc-text">Step 1: 计算出初始状态和结束状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-动态创建CSS动画"><span class="toc-text">Step 2: 动态创建CSS动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-激活CSS动画"><span class="toc-text">Step 3: 激活CSS动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级版本-圆形菜单"><span class="toc-text">高级版本: 圆形菜单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'dumengjie';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
