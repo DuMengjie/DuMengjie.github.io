@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        [译]原生JS DOM基本操作｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2017/04/18/译-原生JS-DOM基本操作/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>[译]原生JS DOM基本操作</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2017-04-18
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                        <a class="tag" href="/tags/#jQuery"
+                           title="jQuery">jQuery</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            [译]原生JS DOM基本操作
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>原文地址：<a href="https://www.sitepoint.com/dom-manipulation-vanilla-javascript-no-jquery/" target="_blank" rel="external">https://www.sitepoint.com/dom-manipulation-vanilla-javascript-no-jquery/</a></p>
+<p>原文标题：The Basics of DOM Manipulation in Vanilla JavaScript (No jQuery)</p>
+<p>原文作者：<a href="https://www.sitepoint.com/author/sseitz/" target="_blank" rel="external">Sebastian Seitz</a></p>
+<p>翻译：<a href="https://dumengjie.github.io/">杜梦杰</a></p>
+<p>前言：看到原文标题的<strong><code>Vanilla JavaScript</code></strong>，大家肯定以为这是一个JS库，其实它就是原生JS，大家可以去<a href="http://vanilla-js.com/" target="_blank" rel="external">官网</a>上看一下，上面的吐槽还是蛮有意思的。其实本文就是介绍了原生JS的强大DOM操作能力，并建议大家弃用<code>jQuery</code>（Github的一个repo：<a href="https://github.com/oneuijs/You-Dont-Need-jQuery" target="_blank" rel="external">You-Dont-Need-jQuery</a>，和本文内容十分一致，建议大家看一下）。</p>
+</blockquote>
+<p><img src="VanillaJS.png" alt="Vanilla JS"></p>
+<p>当要进行DOM操作时，我们总会去<code>jQuery</code>中查找相应的方法。然而，原生JS的DOM API足以应大多数情况，并且由于IE11以下版本已被<a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support" target="_blank" rel="external">正式弃用</a>，使用原生JS没有任何后顾之忧。</p>
+<p>在本文中，我会展示如何使用原生JS来实现最常见的DOM操作，分别有：</p>
+<ul>
+<li>查找和改动DOM节点</li>
+<li>变更类和属性<code>classes and attributes</code></li>
+<li>监听事件</li>
+<li>动画</li>
+</ul>
+<p>在文章结尾，我会告诉大家如何创建自己的可放入任何项目的超轻量级DOM库。在文章中你会了解到利用原生JS进行DOM操作并不是什么复杂的事，<code>jQuery</code>中的许多方法可以使用原生API可以直接实现。</p>
+<p>现在就开始吧！</p>
+<h2 id="DOM操作：查找DOM节点"><a href="#DOM操作：查找DOM节点" class="headerlink" title="DOM操作：查找DOM节点"></a>DOM操作：查找DOM节点</h2><p><em>请注意：我只会对原生DOM API进行简单介绍，并不会详细阐述。所以在示例中你可能会看到我并没有明确介绍的一些方法。这种情况下请自行查阅<a href="https://developer.mozilla.org/en-US/" target="_blank" rel="external">Mozilla Developer Network</a>。</em></p>
+<p>查找DOM节点可以使用<code>.querySelector()</code>方法，可以使用任意的CSS选择器作为参数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myElement = <span class="built_in">document</span>.querySelector(<span class="string">'#foo &gt; div.bar'</span>)</div></pre></td></tr></table></figure>
+<p>这个方法会返回第一个匹配元素（深度优先）。相反的，我们也可以检测一个元素是否匹配一个选择器。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.matches(<span class="string">'div.bar'</span>) === <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>如果想获取所有匹配元素，可以使用<code>.querySelectorAll()</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.bar'</span>)</div></pre></td></tr></table></figure>
+<p>如果已经引用了父级元素，我们可以只查找子元素而不是整个文档<code>document</code>。像这样缩小了查找范围，我们可以简化选择器并提高性能。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myChildElemet = myElement.querySelector(<span class="string">'input[type="submit"]'</span>)</div><div class="line"></div><div class="line"><span class="comment">// Instead of</span></div><div class="line"><span class="comment">// document.querySelector('#foo &gt; div.bar input[type="submit"]')</span></div></pre></td></tr></table></figure>
+<p>既然如此,为什么我们还要使用像<code>.getElementByTagName()</code>之类的并不是很方便的方法呢？一个重要原因是因为<code>.querySelector()</code>方法返回的结果并不是实时的，如果我们动态的添加一个匹配选择器的元素，结果集合并不会更新。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> elements1 = <span class="built_in">document</span>.querySelectorAll(<span class="string">'div'</span>)</div><div class="line"><span class="keyword">const</span> elements2 = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'div'</span>)</div><div class="line"><span class="keyword">const</span> newElement = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>)</div><div class="line"></div><div class="line"><span class="built_in">document</span>.body.appendChild(newElement)</div><div class="line">elements1.length === elements2.length <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>另一个原因是这样的一个实时集合并不需要事先收集好所有信息，然而<code>.querySelectorAll()</code>会立即收集所有信息并生成一个静态列表，这样做的<a href="https://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/" target="_blank" rel="external">性能并不是很高</a>。</p>
+<h3 id="操作节点列表"><a href="#操作节点列表" class="headerlink" title="操作节点列表"></a>操作节点列表</h3><p>现在对于<code>.querySelectorAll()</code>我们有两个问题。第一个问题是无法在结果上调用节点方法<code>Node methods</code>并且无法向子元素传递。我们需要在这些元素上进行显示迭代。这就产生了另外一个问题：<code>.querySelectorAll()</code>方法的返回值是一个节点列表，而不是数组。这意味着不能直接使用常见的数组方法。对于节点列表有一些对应的方法，例如<code>.forEach()</code>，但是现在IE还不支持。因此我们要先把节点列表转换为数组，或者从数组原型<code>Array prototype</code>”借“一些方法。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Using Array.from()</span></div><div class="line"><span class="built_in">Array</span>.from(myElements).forEach(doSomethingWithEachElement)</div><div class="line"></div><div class="line"><span class="comment">// Or prior to ES6</span></div><div class="line"><span class="built_in">Array</span>.prototype.forEach.call(myElements, doSomethingWithEachElement)</div><div class="line"></div><div class="line"><span class="comment">// Shorthand:</span></div><div class="line">[].forEach.call(myElements, doSomethingWithEachElement)</div></pre></td></tr></table></figure>
+<p>每个元素都有一些只读的属性，它们都是实时更新的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.children</div><div class="line">myElement.firstElementChild</div><div class="line">myElement.lastElementChild</div><div class="line">myElement.previousElementSibling</div><div class="line">myElement.nextElementSibling</div></pre></td></tr></table></figure>
+<p>由于元素接口<code>Element interface</code>继承自节点接口<code>Node interface</code>，以下这些属性也是可用的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.childNodes</div><div class="line">myElement.firstChild</div><div class="line">myElement.lastChild</div><div class="line">myElement.previousSibling</div><div class="line">myElement.nextSibling</div><div class="line">myElement.parentNode</div><div class="line">myElement.parentElement</div></pre></td></tr></table></figure>
+<p>前者只有元素可用，后者（除了<code>.parentElement</code>）任意节点均可使用，例如：文本节点<code>text node</code>。我们可以检查一个节点的类型，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.firstChild.nodeType === <span class="number">3</span> <span class="comment">// this would be a text node</span></div></pre></td></tr></table></figure>
+<p>我们可以使用<code>instanceof</code>操作符来查看节点的原型链：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.firstChild.nodeType <span class="keyword">instanceof</span> Text</div></pre></td></tr></table></figure>
+<h2 id="更改类和属性"><a href="#更改类和属性" class="headerlink" title="更改类和属性"></a>更改类和属性</h2><p>更改元素的类非常简单：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.classList.add(<span class="string">'foo'</span>)</div><div class="line">myElement.classList.remove(<span class="string">'bar'</span>)</div><div class="line">myElement.classList.toggle(<span class="string">'baz'</span>)</div></pre></td></tr></table></figure>
+<p>关于如何更改类的深入讨论请阅读<a href="https://www.sitepoint.com/add-remove-css-class-vanilla-js/" target="_blank" rel="external">quick tip by Yaphi Berhanu</a>。元素属性可以像其他对象属性一样被获取：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Get an attribute value</span></div><div class="line"><span class="keyword">const</span> value = myElement.value</div><div class="line"></div><div class="line"><span class="comment">// Set an attribute as an element property</span></div><div class="line">myElement.value = <span class="string">'foo'</span></div><div class="line"></div><div class="line"><span class="comment">// Set multiple properties using Object.assign()</span></div><div class="line"><span class="built_in">Object</span>.assign(myElement, &#123;</div><div class="line">  <span class="attr">value</span>: <span class="string">'foo'</span>,</div><div class="line">  <span class="attr">id</span>: <span class="string">'bar'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// Remove an attribute</span></div><div class="line">myElement.value = <span class="literal">null</span></div></pre></td></tr></table></figure>
+<p>要注意存在<code>.getAttibute()</code>， <code>.setAttribute()</code> 和<code>removeAttribute()</code>这些方法。他们会直接更改元素的HTML属性<code>HTML attributes</code>（而不是DOM属性<code>DOM properties</code>），这会触发浏览器重绘（你可以使用浏览器的开发工具检查元素来观察这些改变）。除了触发浏览器重绘，这比仅设置DOM属性更加耗费性能，这些方法也会导致一些<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute#Notes" target="_blank" rel="external">无法预料的结果</a>。</p>
+<p>一般来说，只有对没有相应DOM属性的属性（例如<code>colspan</code>）使用它们，或是你坚持要改变HTML的情况（例如克隆元素时保存属性或更改父元素的<code>.innerHTML</code>）。</p>
+<h3 id="增加CSS样式"><a href="#增加CSS样式" class="headerlink" title="增加CSS样式"></a>增加CSS样式</h3><p>CSS样式可以其他属性一样应用到元素上。请注意JavaScript中元素的名称要使用驼峰写法。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.style.marginLeft = <span class="string">'2em'</span></div></pre></td></tr></table></figure>
+<p>可以使用<code>.style</code>来获取确定值，但是这种方法只能取到直接应用的样式。要获取计算后的值<code>computed values</code>，可以使用<code>.window.getComputedStyle()</code>。这个方法以元素为参数，返回<a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration" target="_blank" rel="external">CSSStyleDeclaration</a>，包含元素自身样式以及继承样式：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">window</span>.getComputedStyle(myElement).getPropertyValue(<span class="string">'margin-left'</span>)</div></pre></td></tr></table></figure>
+<h2 id="变更DOM节点"><a href="#变更DOM节点" class="headerlink" title="变更DOM节点"></a>变更DOM节点</h2><p>可以如下移动元素：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Append element1 as the last child of element2</span></div><div class="line">element1.appendChild(element2)</div><div class="line"></div><div class="line"><span class="comment">// Insert element2 as child of element 1, right before element3</span></div><div class="line">element1.insertBefore(element2, element3)</div></pre></td></tr></table></figure>
+<p>如果不想移动元素，仅插入一份<code>copy</code>，可以如下进行克隆：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Create a clone</span></div><div class="line"><span class="keyword">const</span> myElementClone = myElement.cloneNode()</div><div class="line">myParentElement.appendChild(myElementClone)</div></pre></td></tr></table></figure>
+<p><code>.cloneNode()</code>方法可以以一个布尔值作为可选参数，如果值为真，会进行深复制，即子元素也会被克隆。</p>
+<p>当然，我们也可以创建新的元素或节点：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myNewElement = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>)</div><div class="line"><span class="keyword">const</span> myNewTextNode = <span class="built_in">document</span>.createTextNode(<span class="string">'some text'</span>)</div></pre></td></tr></table></figure>
+<p>可以使用之前的方法插入它们。如果要删除元素，并不能直接删除，但是可以从父元素删除子元素，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myParentElement.removeChild(myElement)</div></pre></td></tr></table></figure>
+<p>可以看出，只需要做一点简单的工作就可以通过某元素的父元素直接删除该元素：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.parentNode.removeChild(myElement)</div></pre></td></tr></table></figure>
+<h3 id="元素属性"><a href="#元素属性" class="headerlink" title="元素属性"></a>元素属性</h3><p>每个元素都有<code>.innerHTML</code>和<code>.textContent</code>属性（也有<code>.innerText</code>，它和<code>.textContent</code>类似，但也有一些<a href="http://perfectionkills.com/the-poor-misunderstood-innerText/" target="_blank" rel="external">重要区别</a>）。这两个属性分别会取得HTML内容和纯文本内容。这些属性都是可写的，可以直接更改元素内容：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Replace the inner HTML</span></div><div class="line">myElement.innerHTML = <span class="string">`</span></div><div class="line">  &lt;div&gt;</div><div class="line">    &lt;h2&gt;New content&lt;/h2&gt;</div><div class="line">    &lt;p&gt;beep boop beep boop&lt;/p&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">`</div><div class="line"></div><div class="line"><span class="comment">// Remove all child nodes</span></div><div class="line">myElement.innerHTML = <span class="literal">null</span></div><div class="line"></div><div class="line"><span class="comment">// Append to the inner HTML</span></div><div class="line">myElement.innerHTML += <span class="string">`</span></div><div class="line">  &lt;a href="foo.html"&gt;continue reading...&lt;/a&gt;</div><div class="line">  &lt;hr/&gt;</div><div class="line">`</div></pre></td></tr></table></figure>
+<p>像上面这样往HTML中加入标签并不是一个好主意，这样做会丢失掉元素上已做的属性更改和已绑定的事件侦听器。<code>.innerHTML</code>适用于用其他内容将标签完全替换掉，例如服务器端呈现的标记。所以最好如下添加元素：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</div><div class="line"><span class="keyword">const</span> text = <span class="built_in">document</span>.createTextNode(<span class="string">'continue reading...'</span>)</div><div class="line"><span class="keyword">const</span> hr = <span class="built_in">document</span>.createElement(<span class="string">'hr'</span>)</div><div class="line"></div><div class="line">link.href = <span class="string">'foo.html'</span></div><div class="line">link.appendChild(text)</div><div class="line">myElement.appendChild(link)</div><div class="line">myElement.appendChild(hr)</div></pre></td></tr></table></figure>
+<p>但是用这种方法会造成两次浏览器重绘，每添加一个元素都会触发一次，然而改变<code>.innerHTML</code>只会触发一次。为了解决这个性能问题，我们可以先把所有节点都放到一个<a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" target="_blank" rel="external">DocumentFragment</a>中，然后再添加这个<code>fragment</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> fragment = <span class="built_in">document</span>.createDocumentFragment()</div><div class="line"></div><div class="line">fragment.appendChild(text)</div><div class="line">fragment.appendChild(hr)</div><div class="line">myElement.appendChild(fragment)</div></pre></td></tr></table></figure>
+<h2 id="事件侦听"><a href="#事件侦听" class="headerlink" title="事件侦听"></a>事件侦听</h2><p>大家最熟知的添加事件侦听器的方法可能是下面这种：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.onclick = <span class="function"><span class="keyword">function</span> <span class="title">onclick</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(event.type + <span class="string">' got fired'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但应尽量避免使用这种方法。由于<code>.onclick</code>是元素的属性，因此我们可以改变它，但是不能用它来添加额外的侦听器——重新分配一个函数会改写对旧函数的引用。</p>
+<p>我们可以使用更加强大的<code>.addEventListener()</code>方法不限数量的添加各种类型的侦听器。该方法共有三个参数：事件类型（例如<code>click</code>），事件发生时触发的函数（该函数会传递一个事件对象<code>event object</code>），以及一个可选的配置对象（将在下文介绍）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(event.type + <span class="string">' got fired'</span>)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">myElement.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(event.type + <span class="string">' got fired again'</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>在侦听器函数中，<code>event.target</code>指向发生事件的元素（和<code>this</code>的作用一样，除非使用<a href="https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/" target="_blank" rel="external">箭头函数</a>）。因此可以很方便的取得事件对象的属性：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// The `forms` property of the document is an array holding</span></div><div class="line"><span class="comment">// references to all forms</span></div><div class="line"><span class="keyword">const</span> myForm = <span class="built_in">document</span>.forms[<span class="number">0</span>]</div><div class="line"><span class="keyword">const</span> myInputElements = myForm.querySelectorAll(<span class="string">'input'</span>)</div><div class="line"></div><div class="line"><span class="built_in">Array</span>.from(myInputElements).forEach(<span class="function"><span class="params">el</span> =&gt;</span> &#123;</div><div class="line">  el.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(event.target.value)</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="阻止默认行为"><a href="#阻止默认行为" class="headerlink" title="阻止默认行为"></a>阻止默认行为</h3><p>尽管在侦听器函数内部随时都可取得<code>event</code>对象，但最好还是需要的时候再传入（可以任意命名）。对于<code>Event</code>的接口就不做详细介绍了，但<code>.preventDefault()</code>方法还是要注意一下，该方法会阻止浏览器的默认行为，例如链接跳转。关于<code>.preventDefault()</code>另一个广泛应用的例子是客户端表单验证失败时阻止表单提交：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myForm.addEventListener(<span class="string">'submit'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> name = <span class="keyword">this</span>.querySelector(<span class="string">'#name'</span>)</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (name.value === <span class="string">'Donald Duck'</span>) &#123;</div><div class="line">    alert(<span class="string">'You gotta be kidding!'</span>)</div><div class="line">    event.preventDefault()</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>另一个重要的方法是<code>.stopPropagation()</code>，这个方法会阻止事件向上冒泡。如果子元素和父元素上都绑定了单击事件侦听器，单击子元素两个事件都会触发，但是如果子元素设置了阻止事件冒泡， 那么只会触发子元素上的事件。</p>
+<p><code>.addEventListener()</code>方法可以以一个可选的配置对象作为第三个参数，该对象可以包含0至3个的布尔类型属性（默认值都是<code>false</code>）：</p>
+<ul>
+<li><code>capture</code>：事件会先在该元素上触发，然后再在子元素上触发（时间捕获和冒泡机制<code>event capturing and bubbling</code>是一片单独的文章，详情请<a href="http://javascript.info/bubbling-and-capturing" target="_blank" rel="external">点击</a>）</li>
+<li><code>once</code>：该事件只会触发一次</li>
+<li><code>passive</code>：监听器内部不会调用<code>.preventDefault()</code>函数来阻止默认行为，<code>.preventDefault()</code>将被忽略（控制台中会有警告）。</li>
+</ul>
+<p>最常用的选项是<code>.capture</code>，可以不把它写在配置对象里，而是直接以布尔值传入：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.addEventListener(type, listener, <span class="literal">true</span>)</div></pre></td></tr></table></figure>
+<p>事件侦听器可以通过<code>.removeEventListener()</code>移除，它的参数包括事件类型和要移除的回调函数<code>callback function</code>的引用。<code>once</code>选项（即只触发一次）也可以这样实现：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myElement.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> <span class="title">listener</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(event.type + <span class="string">' got triggered on '</span> + <span class="keyword">this</span>)</div><div class="line">  <span class="keyword">this</span>.removeEventListener(<span class="string">'change'</span>, listener)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h3><p>另一个有用的模式是事件代理<code>event delegation</code>：假设我们想在表格<code>form</code>的所有<code>input</code>标签绑定<code>change</code>事件侦听器。一种解决方案是使用<code>myForm.querySelectorAll(&#39;input&#39;)</code>来迭代绑定。其实，没必要这么麻烦，可以只给表单<code>form</code>添加事件侦听器然后检查<code>event.target</code>的内容。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">myForm.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> target = event.target</div><div class="line">  <span class="keyword">if</span> (target.matches(<span class="string">'input'</span>)) &#123;</div><div class="line">    <span class="built_in">console</span>.log(target.value)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这种模式的另一个优点是会自动计算动态插入的元素，无需插入新的事件侦听器。</p>
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p>实现动画的最好方法通常是应用有<code>transition</code>属性的类，或是<code>CSS @keyframes</code>。但如果动画需要更多弹性的话（例如游戏里的动画），也可以使用<code>JavaScript</code>来实现。</p>
+<p>原生方法是设定一个<code>window.setTimeout()</code>函数在动画结束时调用它自己。但是这种方法会导致文档流重排， 这些<code>layout transh</code>会导致卡顿，特别是移动设备上。相反，我们可以使用<code>window.requestAnimationFrame()</code>来同步更新，把所有的更新安排到下一个浏览器重绘帧上。它以一个回调函数作为参数，这个函数会接收到现在的时间戳：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> start = <span class="built_in">window</span>.performance.now()</div><div class="line"><span class="keyword">const</span> duration = <span class="number">2000</span></div><div class="line"></div><div class="line"><span class="built_in">window</span>.requestAnimationFrame(<span class="function"><span class="keyword">function</span> <span class="title">fadeIn</span> (<span class="params">now</span>)) </span>&#123;</div><div class="line">  <span class="keyword">const</span> progress = now - start</div><div class="line">  myElement.style.opacity = progress / duration</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (progress &lt; duration) &#123;</div><div class="line">    <span class="built_in">window</span>.requestAnimationFrame(fadeIn)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就能实现非常流畅的动画了。想了解更多细节，请<a href="https://www.sitepoint.com/quick-tip-game-loop-in-javascript/" target="_blank" rel="external">点击</a>。</p>
+<h2 id="编写你自己的帮助函数"><a href="#编写你自己的帮助函数" class="headerlink" title="编写你自己的帮助函数"></a>编写你自己的帮助函数</h2><p>与jQuery简明的链式语法<code>$(&#39;.foo&#39;).css({color: &#39;red&#39;})</code>相比，总是在元素上迭代的操作确实有些麻烦。何不写出我们自己对这些方法的简写方案？</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> $ = <span class="function"><span class="keyword">function</span> <span class="title">$</span> (<span class="params">selector, context = document</span>) </span>&#123;</div><div class="line"><span class="keyword">const</span> elements = <span class="built_in">Array</span>.from(context.querySelectorAll(selector))</div><div class="line"></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    elements,</div><div class="line"></div><div class="line">    html (newHtml) &#123;</div><div class="line">      <span class="keyword">this</span>.elements.forEach(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</div><div class="line">        element.innerHTML = newHtml</div><div class="line">      &#125;)</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span></div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    css (newCss) &#123;</div><div class="line">      <span class="keyword">this</span>.elements.forEach(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">Object</span>.assign(element.style, newCss)</div><div class="line">      &#125;)</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span></div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    on (event, handler, options) &#123;</div><div class="line">      <span class="keyword">this</span>.elements.forEach(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</div><div class="line">        element.addEventListener(event, handler, options)</div><div class="line">      &#125;)</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// etc.</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们就有了超轻量级DOM库，仅包含我们需要的方法，不向后兼容。通常我们会把这些方法放到集合的原型中。<a href="https://gist.github.com/SitePointEditors/4f6643d62a87aece860b0784c6eeffd2" target="_blank" rel="external">这里</a>有更详尽的版本。或者我们可以写的简单一些：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> $ = <span class="function">(<span class="params">selector, context = <span class="built_in">document</span></span>) =&gt;</span> context.querySelector(selector)</div><div class="line"><span class="keyword">const</span> $$ = <span class="function">(<span class="params">selector, context = <span class="built_in">document</span></span>) =&gt;</span> context.querySelectorAll(selector)</div><div class="line"></div><div class="line"><span class="keyword">const</span> html = <span class="function">(<span class="params">nodeList, newHtml</span>) =&gt;</span> &#123;</div><div class="line">  <span class="built_in">Array</span>.from(nodeList).forEach(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</div><div class="line">    element.innerHTML = newHtml</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// And so on...</span></div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>希望大家已经了解到利用原生JS进行DOM操作并不是什么复杂的事，<code>jQuery</code>中的许多方法可以使用原生API可以直接实现。这意味对一些日常操作（例如导航菜单和弹出框），没必要再添加DOM库。</p>
+<p>尽管有些<code>native API</code>确实很冗长或不方便，我们可以很简单的写出自己的帮助函数来抽象这些重复工作。</p>
+<p>现在轮到你了，你怎么想呢？尽量避免使用第三方库还是不做改变？</p>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/04/18/译-原生JS-DOM基本操作/"
+                     data-title="[译]原生JS DOM基本操作"
+                     data-url="http://dumengjie.github.io/2017/04/18/译-原生JS-DOM基本操作/"
+                     data-images="http://dumengjie.github.io/2017/04/18/译-原生JS-DOM基本操作/article-bg7.jpg"
+                     data-content="
+原文地址：https://www.sitepoint.com/dom-manipulatio... | DuMengjie&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/04/08/译-构建高性能展开-折叠动画/" data-toggle="tooltip" data-placement="top"
+                           title="[译]构建高性能展开&收缩动画">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/04/18/译-原生JS-DOM基本操作/"
+                         data-title="[译]原生JS DOM基本操作"
+                         data-url="http://dumengjie.github.io/2017/04/18/译-原生JS-DOM基本操作/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM操作：查找DOM节点"><span class="toc-text">DOM操作：查找DOM节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作节点列表"><span class="toc-text">操作节点列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更改类和属性"><span class="toc-text">更改类和属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增加CSS样式"><span class="toc-text">增加CSS样式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变更DOM节点"><span class="toc-text">变更DOM节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素属性"><span class="toc-text">元素属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件侦听"><span class="toc-text">事件侦听</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#阻止默认行为"><span class="toc-text">阻止默认行为</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件代理"><span class="toc-text">事件代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画"><span class="toc-text">动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写你自己的帮助函数"><span class="toc-text">编写你自己的帮助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                        <a class="tag" href="/tags/#jQuery"
+                           title="jQuery">jQuery</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'dumengjie';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
