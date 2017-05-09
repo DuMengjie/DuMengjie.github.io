@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        JavaScript设计模式｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2017/05/09/JavaScript设计模式/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>JavaScript设计模式</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2017-05-09
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            JavaScript设计模式
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>学习极客学院课程<a href="http://www.jikexueyuan.com/course/652.html" target="_blank" rel="external">JavaScript设计模式</a>所做的笔记，参考了<a href="http://www.cnblogs.com/TomXu/" target="_blank" rel="external">汤姆大叔</a>的<a href="http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html#3676084" target="_blank" rel="external">深入理解JavaScript系列文章</a>。主要内容是各种设计模式的概念解读，作用和注意事项，现阶段对各种设计模式的理解并不是很深，实际运用到了之后再来补充。</p>
+</blockquote>
+<p><strong>设计原则</strong></p>
+<ol>
+<li>对扩展开放，对修改关闭</li>
+<li>子类继承父类，单独掉完全可以运行</li>
+<li>引用一个对象，如果这个对象有底层类型，直接引用底层类型</li>
+<li>每一个接口应该是一个角色</li>
+<li>新的对象应使用一些一有对象，使之成为新对象的一部分</li>
+<li>一个对象应对其他对象有尽可能少的了解</li>
+</ol>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>保证一个类只有一个实例，实现的方法一般是先判断实例是否存在，如果存在直接返回，如果不存在就创建了再返回，这就确保了一个类只有一个实例对象。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>模块间的通信</li>
+<li>系统中某个类的对象只能存在一个</li>
+<li>保护自己的属性和方法</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>注意this的使用</li>
+<li>闭包容易造成内存泄漏，不需要的赶快干掉</li>
+<li>注意new的成本</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> mySingleton = &#123;</div><div class="line">    <span class="attr">property1</span>: <span class="string">"something"</span>,</div><div class="line">    <span class="attr">property2</span>: <span class="string">"something else"</span>,</div><div class="line">    <span class="attr">method1</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'hello world'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h3><p>构造函数用于创建特定类型的对象——不仅声明了使用的对象，构造函数还可以接受参数以便第一次创建对象的时候设置对象的成员值。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>用于创建特定类型的对象</li>
+<li>第一次声明的时候给对象赋值</li>
+<li>自己声明构造函数，赋予属性和方法</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>声明函数的时候处理业务逻辑</li>
+<li>区分和单例的区别，配合单例实现初始化</li>
+<li>构造函数大写字母开头</li>
+<li>注意new的成本（继承）</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params">model, year, miles</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.model = model;</div><div class="line">    <span class="keyword">this</span>.year = year;</div><div class="line">    <span class="keyword">this</span>.miles = miles;</div><div class="line">    <span class="keyword">this</span>.output= <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.model + <span class="string">"走了"</span> + <span class="keyword">this</span>.miles + <span class="string">"公里"</span>;</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> tom= <span class="keyword">new</span> Car(<span class="string">"大叔"</span>, <span class="number">2009</span>, <span class="number">20000</span>);</div><div class="line"><span class="keyword">var</span> dudu= <span class="keyword">new</span> Car(<span class="string">"Dudu"</span>, <span class="number">2010</span>, <span class="number">5000</span>);</div></pre></td></tr></table></figure>
+<h3 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h3><p>建造者模式可以将一个复杂对象的构建与其表现相分离，使得同样的构建过程可以创建不同的表示。也就是说如果我们用了建造者模式，那么用户就需要指定需要建造的类型就可以得到他们，而具体建造的过程和细节就不需要知道了。建造者模式主要用于“分步骤构建一个复杂的对象”。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>分步创建一个复杂的对象</li>
+<li>解耦封装过程和具体创建的组件</li>
+<li>无需关心组件如何组装</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>一定要一个稳定的算法进行支持</li>
+<li>加工工艺是暴露的</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getBeerById</span>(<span class="params">id, callback</span>) </span>&#123;</div><div class="line">    <span class="comment">// 使用ID来请求数据，然后返回数据.</span></div><div class="line">    asyncRequest(<span class="string">'GET'</span>, <span class="string">'beer.uri?id='</span> + id, <span class="function"><span class="keyword">function</span> (<span class="params">resp</span>) </span>&#123;</div><div class="line">        <span class="comment">// callback调用 response</span></div><div class="line">        callback(resp.responseText);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.querySelector(<span class="string">'#test'</span>);</div><div class="line">el.addEventListener(<span class="string">'click'</span>, getBeerByIdBridge, <span class="literal">false</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getBeerByIdBridge</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    getBeerById(<span class="keyword">this</span>.id, <span class="function"><span class="keyword">function</span> (<span class="params">beer</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Requested Beer: '</span> + beer);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>工厂模式定义一个用于创建对象的接口，这个接口由子类决定实例化哪一个类。该模式使一个类的实例化延迟到了子类，而子类可以重写接口方法以便创建的时候指定自己的对象类型。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>对象的构建十分复杂</li>
+<li>需要依赖具体的环境创建不同实例</li>
+<li>处理大量具有相同属性的小对象</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>不能滥用工厂模式，有时候仅仅是给代码增加复杂度</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> page = page || &#123;&#125;;</div><div class="line">page.dom = page.dom || &#123;&#125;;</div><div class="line"><span class="comment">//子函数1：处理文本</span></div><div class="line">page.dom.Text = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span> (<span class="params">where</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> txt = <span class="built_in">document</span>.createTextNode(<span class="keyword">this</span>.url);</div><div class="line">        where.appendChild(txt);</div><div class="line">    &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//子函数2：处理链接</span></div><div class="line">page.dom.Link = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span> (<span class="params">where</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</div><div class="line">        link.href = <span class="keyword">this</span>.url;</div><div class="line">        link.appendChild(<span class="built_in">document</span>.createTextNode(<span class="keyword">this</span>.url));</div><div class="line">        where.appendChild(link);</div><div class="line">    &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//子函数3：处理图片</span></div><div class="line">page.dom.Image = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span> (<span class="params">where</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> im = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</div><div class="line">        im.src = <span class="keyword">this</span>.url;</div><div class="line">        where.appendChild(im);</div><div class="line">    &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//工厂处理函数</span></div><div class="line">page.dom.factory = <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> page.dom[type];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//使用方式</span></div><div class="line"><span class="keyword">var</span> o = page.dom.factory(<span class="string">'Link'</span>);</div><div class="line">o.url = <span class="string">'http://www.cnblogs.com'</span>;</div><div class="line">o.insert(<span class="built_in">document</span>.body);</div></pre></td></tr></table></figure>
+<h3 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h3><p>外观模式<code>Facade</code>为子系统中的一组接口提供了一个一致的界面，此模块定义了一个高层接口，这个接口使得这一子系统更加容易使用。外观模式不仅简化类中的接口，而且对接口与调用者也进行了解耦。外观模式经常被认为开发者必备，它可以将一些复杂操作封装起来，并创建一个简单的接口用于调用。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>在设计初期，应该有意识地将不同的两个层分离，比如经典的三层结构</li>
+<li>在开发阶段，子系统往往因为不断的重构演化而变得越来越复杂，增加外观Facade可以提供一个简单的接口，减少他们之间的依赖</li>
+<li>在维护一个遗留的大型系统时，可能这个系统已经很难维护了，这时候使用外观Facade也是非常合适的，为系统开发一个外观Facade类，为设计粗糙和高度复杂的遗留代码提供比较清晰的接口，让新系统和Facade对象交互，Facade与遗留代码交互所有的复杂工作。</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>外观模式被开发者连续使用时会产生一定的性能问题，因为在每次调用时都要检测功能的可用性</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> addMyEvent = <span class="function"><span class="keyword">function</span> (<span class="params">el, ev, fn</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (el.addEventListener) &#123;</div><div class="line">        el.addEventListener(ev, fn, <span class="literal">false</span>);</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.attachEvent) &#123;</div><div class="line">        el.attachEvent(<span class="string">'on'</span> + ev, fn);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        el[<span class="string">'on'</span> + ev] = fn;</div><div class="line">    &#125;</div><div class="line">&#125;; </div><div class="line"></div><div class="line"><span class="keyword">var</span> mobileEvent = &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    stop: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">        e.preventDefault();</div><div class="line">        e.stopPropagation();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理模式<code>Proxy</code>，为其他对象提供一种代理以控制对这个对象的访问。代理模式使得代理对象控制具体对象的引用。代理几乎可以是任何对象：文件，资源，内存中的对象，或者是一些难以复制的东西。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>远程代理（一个对象将不同空间的对象进行局部代理）</li>
+<li>虚拟代理（根据需要创建开销很大的对象如渲染网页暂时用占位代替真图）</li>
+<li>安全代理（控制真实对象的访问权限）</li>
+<li>智能指引（调用对象代理处理另外一些事情如垃圾回收机制）</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>不能滥用代理，有时候仅仅是给代码增加复杂度</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 先声明美女对象</span></div><div class="line"><span class="keyword">var</span> girl = <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 这是dudu</span></div><div class="line"><span class="keyword">var</span> dudu = <span class="function"><span class="keyword">function</span> (<span class="params">girl</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.girl = girl;</div><div class="line">    <span class="keyword">this</span>.sendGift = <span class="function"><span class="keyword">function</span> (<span class="params">gift</span>) </span>&#123;</div><div class="line">        alert(<span class="string">"Hi "</span> + girl.name + <span class="string">", dudu送你一个礼物："</span> + gift);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 大叔是代理</span></div><div class="line"><span class="keyword">var</span> proxyTom = <span class="function"><span class="keyword">function</span> (<span class="params">girl</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.girl = girl;</div><div class="line">    <span class="keyword">this</span>.sendGift = <span class="function"><span class="keyword">function</span> (<span class="params">gift</span>) </span>&#123;</div><div class="line">        (<span class="keyword">new</span> dudu(girl)).sendGift(gift); <span class="comment">// 替dudu送花咯</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>观察者模式又叫发布订阅模式<code>Publish/Subscribe</code>，它定义了一种一对多的关系，让多个观察者对象同时监听某一个主题对象，这个主题对象的状态发生变化时就会通知所有的观察者对象，使得它们能够自动更新自己。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>支持简单的广播通信，自动通知所有已经订阅过的对象</li>
+<li>页面加载后目标对象很容易与观察者存在一种动态关联，增加了灵活性</li>
+<li>目标对象与观察者之间的抽象耦合关系能够单独拓展以及重用</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>监听要在触发之前</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observer</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.fns = [];</div><div class="line">&#125;</div><div class="line">Observer.prototype = &#123;</div><div class="line">    <span class="attr">subscribe</span>: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.fns.push(fn);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">unsubscribe</span>: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.fns = <span class="keyword">this</span>.fns.filter(</div><div class="line">                        <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">                            <span class="keyword">if</span> (el !== fn) &#123;</div><div class="line">                                <span class="keyword">return</span> el;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    );</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">update</span>: <span class="function"><span class="keyword">function</span> (<span class="params">o, thisObj</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> scope = thisObj || <span class="built_in">window</span>;</div><div class="line">        <span class="keyword">this</span>.fns.forEach(</div><div class="line">                        <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">                            el.call(scope, o);</div><div class="line">                        &#125;</div><div class="line">                    );</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//测试</span></div><div class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> Observer;</div><div class="line"><span class="keyword">var</span> f1 = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Robbin: '</span> + data + <span class="string">', 赶紧干活了！'</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> f2 = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Randall: '</span> + data + <span class="string">', 找他加点工资去！'</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">o.subscribe(f1);</div><div class="line">o.subscribe(f2);</div><div class="line"></div><div class="line">o.update(<span class="string">"Tom回来了！"</span>)</div><div class="line"></div><div class="line"><span class="comment">//退订f1</span></div><div class="line">o.unsubscribe(f1);</div><div class="line"><span class="comment">//再来验证</span></div><div class="line">o.update(<span class="string">"Tom回来了！"</span>);</div></pre></td></tr></table></figure>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>策略模式定义了算法家族，分别封装起来，让他们之间可以相互替换，此模式让算法的变化不会影响到使用算法的客户。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>所有的这些算法都是做相同的事情，只是实现不同</li>
+<li>以相同的方式调用所有的方法，减少了各种算法类与使用算法类之间的耦合</li>
+<li>单独定义算法类，也方便了单元测试</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>不仅可以封装算法，也可以用来封装几乎任何类型的规则，只要在分析过程中需要在不同时间应用不同的业务规则，就可以考虑使用策略模式来处理各种变化</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> validator = &#123;</div><div class="line"></div><div class="line">    <span class="comment">// 所有可以的验证规则处理类存放的地方，后面会单独定义</span></div><div class="line">    types: &#123;&#125;,</div><div class="line"></div><div class="line">    <span class="comment">// 验证类型所对应的错误消息</span></div><div class="line">    messages: [],</div><div class="line"></div><div class="line">    <span class="comment">// 当然需要使用的验证类型</span></div><div class="line">    config: &#123;&#125;,</div><div class="line"></div><div class="line">    <span class="comment">// 暴露的公开验证方法</span></div><div class="line">    <span class="comment">// 传入的参数是 key =&gt; value对</span></div><div class="line">    validate: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> i, msg, type, checker, result_ok;</div><div class="line"></div><div class="line">        <span class="comment">// 清空所有的错误信息</span></div><div class="line">        <span class="keyword">this</span>.messages = [];</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (i <span class="keyword">in</span> data) &#123;</div><div class="line">            <span class="keyword">if</span> (data.hasOwnProperty(i)) &#123;</div><div class="line"></div><div class="line">                type = <span class="keyword">this</span>.config[i];  <span class="comment">// 根据key查询是否有存在的验证规则</span></div><div class="line">                checker = <span class="keyword">this</span>.types[type]; <span class="comment">// 获取验证规则的验证类</span></div><div class="line"></div><div class="line">                <span class="keyword">if</span> (!type) &#123;</div><div class="line">                    <span class="keyword">continue</span>; <span class="comment">// 如果验证规则不存在，则不处理</span></div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (!checker) &#123; <span class="comment">// 如果验证规则类不存在，抛出异常</span></div><div class="line">                    <span class="keyword">throw</span> &#123;</div><div class="line">                        <span class="attr">name</span>: <span class="string">"ValidationError"</span>,</div><div class="line">                        <span class="attr">message</span>: <span class="string">"No handler to validate type "</span> + type</div><div class="line">                    &#125;;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                result_ok = checker.validate(data[i]); <span class="comment">// 使用查到到的单个验证类进行验证</span></div><div class="line">                <span class="keyword">if</span> (!result_ok) &#123;</div><div class="line">                    msg = <span class="string">"Invalid value for *"</span> + i + <span class="string">"*, "</span> + checker.instructions;</div><div class="line">                    <span class="keyword">this</span>.messages.push(msg);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.hasErrors();</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">// helper</span></div><div class="line">    hasErrors: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.messages.length !== <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//然后剩下的工作，就是定义types里存放的各种验证类了，我们这里只举几个例子：</span></div><div class="line"><span class="comment">// 验证给定的值是否不为空</span></div><div class="line">validator.types.isNonEmpty = &#123;</div><div class="line">    <span class="attr">validate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> value !== <span class="string">""</span>;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">instructions</span>: <span class="string">"传入的值不能为空"</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 验证给定的值是否是数字</span></div><div class="line">validator.types.isNumber = &#123;</div><div class="line">    <span class="attr">validate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> !<span class="built_in">isNaN</span>(value);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">instructions</span>: <span class="string">"传入的值只能是合法的数字，例如：1, 3.14 or 2010"</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 验证给定的值是否只是字母或数字</span></div><div class="line">validator.types.isAlphaNum = &#123;</div><div class="line">    <span class="attr">validate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> !<span class="regexp">/[^a-z0-9]/i</span>.test(value);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">instructions</span>: <span class="string">"传入的值只能保护字母和数字，不能包含特殊字符"</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//使用的时候，我们首先要定义需要验证的数据集合，然后还需要定义每种数据需要验证的规则类型，代码如下：</span></div><div class="line"><span class="keyword">var</span> data = &#123;</div><div class="line">    <span class="attr">first_name</span>: <span class="string">"Tom"</span>,</div><div class="line">    <span class="attr">last_name</span>: <span class="string">"Xu"</span>,</div><div class="line">    <span class="attr">age</span>: <span class="string">"unknown"</span>,</div><div class="line">    <span class="attr">username</span>: <span class="string">"TomXu"</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">validator.config = &#123;</div><div class="line">    <span class="attr">first_name</span>: <span class="string">'isNonEmpty'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="string">'isNumber'</span>,</div><div class="line">    <span class="attr">username</span>: <span class="string">'isAlphaNum'</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//最后，获取验证结果的代码就简单了：</span></div><div class="line">validator.validate(data);</div><div class="line"></div><div class="line"><span class="keyword">if</span> (validator.hasErrors()) &#123;</div><div class="line">    <span class="built_in">console</span>.log(validator.messages.join(<span class="string">"\n"</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>用于将一个请求封装成一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及执行可撤销的操作。也就是说该模式旨在将函数的调用、请求和操作封装成一个单一的对象，然后对这个对象进行一系列的处理。此外，可以通过调用实现具体函数的对象来解耦命令对象与接收对象。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>将函数的封装、请求、调用结合为一体</li>
+<li>调用具体的函数解耦命令对象与接受对象</li>
+<li>提高程序模块化的灵活性</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>不需要接口一致，直接调用函数即可，以免造成浪费</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 我们来通过车辆购买程序来展示这个模式，首先定义车辆购买的具体操作类：</span></div><div class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> CarManager = &#123;</div><div class="line"></div><div class="line">        <span class="comment">// 请求信息</span></div><div class="line">        requestInfo: <span class="function"><span class="keyword">function</span> (<span class="params">model, id</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">'The information for '</span> + model +</div><div class="line">        <span class="string">' with ID '</span> + id + <span class="string">' is foobar'</span>;</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="comment">// 购买汽车</span></div><div class="line">        buyVehicle: <span class="function"><span class="keyword">function</span> (<span class="params">model, id</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">'You have successfully purchased Item '</span></div><div class="line">        + id + <span class="string">', a '</span> + model;</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="comment">// 组织view</span></div><div class="line">        arrangeViewing: <span class="function"><span class="keyword">function</span> (<span class="params">model, id</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">'You have successfully booked a viewing of '</span></div><div class="line">        + model + <span class="string">' ( '</span> + id + <span class="string">' ) '</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line"><span class="comment">// 来看一下上述代码，通过调用函数来简单执行manager的命令，然而在一些情况下，我们并不想直接调用对象内部的方法。这样会增加对象与对象间的依赖。现在我们来扩展一下这个CarManager 使其能够接受任何来自包括model和car ID 的CarManager对象的处理请求。根据命令模式的定义，我们希望实现如下这种功能的调用：</span></div><div class="line">CarManager.execute(&#123; <span class="attr">commandType</span>: <span class="string">"buyVehicle"</span>, <span class="attr">operand1</span>: <span class="string">'Ford Escort'</span>, <span class="attr">operand2</span>: <span class="string">'453543'</span> &#125;);</div><div class="line"></div><div class="line"><span class="comment">// 根据这样的需求，我们可以这样啦实现CarManager.execute方法：</span></div><div class="line">CarManager.execute = <span class="function"><span class="keyword">function</span> (<span class="params">command</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> CarManager[command.request](command.model, command.carID);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">CarManager.execute(&#123; <span class="attr">request</span>: <span class="string">"arrangeViewing"</span>, <span class="attr">model</span>: <span class="string">'Ferrari'</span>, <span class="attr">carID</span>: <span class="string">'145523'</span> &#125;);</div><div class="line">CarManager.execute(&#123; <span class="attr">request</span>: <span class="string">"requestInfo"</span>, <span class="attr">model</span>: <span class="string">'Ford Mondeo'</span>, <span class="attr">carID</span>: <span class="string">'543434'</span> &#125;);</div><div class="line">CarManager.execute(&#123; <span class="attr">request</span>: <span class="string">"requestInfo"</span>, <span class="attr">model</span>: <span class="string">'Ford Escort'</span>, <span class="attr">carID</span>: <span class="string">'543434'</span> &#125;);</div><div class="line">CarManager.execute(&#123; <span class="attr">request</span>: <span class="string">"buyVehicle"</span>, <span class="attr">model</span>: <span class="string">'Ford Escort'</span>, <span class="attr">carID</span>: <span class="string">'543434'</span> &#125;);</div></pre></td></tr></table></figure>
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p>提供一种方法顺序一个聚合对象中各个元素，而又不暴露该对象内部表示。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>为遍历不同的集合结构提供一个统一的接口，从而支持同样的算法在不同的集合结构上进行操作</li>
+<li>对于集合内部结果常常变化各异，我们不想暴露其内部结构的话，但又响让客户代码透明底访问其中的元素，这种情况下我们可以使用迭代器模式</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>一般的迭代，我们至少要有两个方法，<code>hasNext()</code>和<code>Next()</code>，这样才能做到遍历所有对象</li>
+<li>遍历的同时更改迭代器所在的集合结构可能会导致问题（比如C#的<code>foreach</code>里不允许修改<code>item</code>）</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> agg = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> index = <span class="number">0</span>,</div><div class="line">    data = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</div><div class="line">    length = data.length;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">next</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> element;</div><div class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>.hasNext()) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">            &#125;</div><div class="line">            element = data[index];</div><div class="line">            index = index + <span class="number">2</span>;</div><div class="line">            <span class="keyword">return</span> element;</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="attr">hasNext</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> index &lt; length;</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="attr">rewind</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            index = <span class="number">0</span>;</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="attr">current</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> data[index];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;;</div><div class="line">&#125; ());</div><div class="line"></div><div class="line"><span class="comment">// 迭代的结果是：1,3,5</span></div><div class="line"><span class="keyword">while</span> (agg.hasNext()) &#123;</div><div class="line">    <span class="built_in">console</span>.log(agg.next());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3><p>职责链模式<code>Chain of responsibility</code>是使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理他为止。</p>
+<p>也就是说，请求以后，从第一个对象开始，链中收到请求的对象要么亲自处理它，要么转发给链中的下一个候选者。提交请求的对象并不明确知道哪一个对象将会处理它——也就是该请求有一个隐式的接受者<code>implicit receiver</code>。根据运行时刻，任一候选者都可以响应相应的请求，候选者的数目是任意的，你可以在运行时刻决定哪些候选者参与到链中。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>dom的冒泡有些类似职责链</li>
+<li>nodejs当controller中有很多负责操作逻辑的时候拆分中间件</li>
+<li>解耦发送者和接收者</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>javascript中的每一次.操作是有代价的，要在必要的时候应用</li>
+</ol>
+<h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><p>适配器模式<code>Adapter</code>是将一个类（对象）的接口（方法或属性）转化成客户希望的另外一个接口（方法或属性），适配器模式使得原本由于接口不兼容而不能一起工作的那些类（对象）可以一些工作。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>使用一个已经存在的对象，但其方法或接口不符合你的要求</li>
+<li>创建一个可复用的对象，该对象可以与其他不相关或不可见的对象协同工作</li>
+<li>使用已经存在的一个或多个对象，但是不能进行继承已匹配它的接口</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>与代理模式的区别，代理模式在不改变它的接口的条件下，为另外一个对象定义了一个代理</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 我们来举一个例子，鸭子（Dock）有飞（fly）和嘎嘎叫（quack）的行为，而火鸡虽然也有飞（fly）的行为，但是其叫声是咯咯的（gobble）。如果你非要火鸡也要实现嘎嘎叫（quack）这个动作，那我们可以复用鸭子的quack方法，但是具体的叫还应该是咯咯的，此时，我们就可以创建一个火鸡的适配器，以便让火鸡也支持quack方法，其内部还是要调用gobble。</span></div><div class="line"></div><div class="line"><span class="comment">// OK，我们开始一步一步实现，首先要先定义鸭子和火鸡的抽象行为，也就是各自的方法函数：</span></div><div class="line"><span class="comment">// 鸭子</span></div><div class="line"><span class="keyword">var</span> Duck = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">&#125;;</div><div class="line">Duck.prototype.fly = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"该方法必须被重写!"</span>);</div><div class="line">&#125;;</div><div class="line">Duck.prototype.quack = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"该方法必须被重写!"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//火鸡</span></div><div class="line"><span class="keyword">var</span> Turkey = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">&#125;;</div><div class="line">Turkey.prototype.fly = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">" 该方法必须被重写 !"</span>);</div><div class="line">&#125;;</div><div class="line">Turkey.prototype.gobble = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">" 该方法必须被重写 !"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 然后再定义具体的鸭子和火鸡的构造函数，分别为：</span></div><div class="line"><span class="comment">//鸭子</span></div><div class="line"><span class="keyword">var</span> MallardDuck = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    Duck.apply(<span class="keyword">this</span>);</div><div class="line">&#125;;</div><div class="line">MallardDuck.prototype = <span class="keyword">new</span> Duck(); <span class="comment">//原型是Duck</span></div><div class="line">MallardDuck.prototype.fly = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"可以飞翔很长的距离!"</span>);</div><div class="line">&#125;;</div><div class="line">MallardDuck.prototype.quack = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"嘎嘎！嘎嘎！"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 火鸡</span></div><div class="line"><span class="keyword">var</span> WildTurkey = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    Turkey.apply(<span class="keyword">this</span>);</div><div class="line">&#125;;</div><div class="line">WildTurkey.prototype = <span class="keyword">new</span> Turkey(); <span class="comment">//原型是Turkey</span></div><div class="line">WildTurkey.prototype.fly = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"飞翔的距离貌似有点短!"</span>);</div><div class="line">&#125;;</div><div class="line">WildTurkey.prototype.gobble = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"咯咯！咯咯！"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 为了让火鸡也支持quack方法，我们创建了一个新的火鸡适配器TurkeyAdapter：</span></div><div class="line"><span class="keyword">var</span> TurkeyAdapter = <span class="function"><span class="keyword">function</span>(<span class="params">oTurkey</span>)</span>&#123;</div><div class="line">    Duck.apply(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">this</span>.oTurkey = oTurkey;</div><div class="line">&#125;;</div><div class="line">TurkeyAdapter.prototype = <span class="keyword">new</span> Duck();</div><div class="line">TurkeyAdapter.prototype.quack = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.oTurkey.gobble();</div><div class="line">&#125;;</div><div class="line">TurkeyAdapter.prototype.fly = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> nFly = <span class="number">0</span>;</div><div class="line">    <span class="keyword">var</span> nLenFly = <span class="number">5</span>;</div><div class="line">    <span class="keyword">for</span>(; nFly &lt; nLenFly;)&#123;</div><div class="line">        <span class="keyword">this</span>.oTurkey.fly();</div><div class="line">        nFly = nFly + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 该构造函数接受一个火鸡的实例对象，然后使用Duck进行apply，其适配器原型是Duck，然后要重新修改其原型的quack方法，以便内部调用oTurkey.gobble()方法。其fly方法也做了一些改变，让火鸡连续飞5次（内部也是调用自身的oTurkey.fly()方法）。</span></div><div class="line"></div><div class="line"><span class="comment">// 调用方法，就很明了了，测试一下便可以知道结果了：</span></div><div class="line"><span class="keyword">var</span> oMallardDuck = <span class="keyword">new</span> MallardDuck();</div><div class="line"><span class="keyword">var</span> oWildTurkey = <span class="keyword">new</span> WildTurkey();</div><div class="line"><span class="keyword">var</span> oTurkeyAdapter = <span class="keyword">new</span> TurkeyAdapter(oWildTurkey);</div><div class="line"></div><div class="line"><span class="comment">// 原有的鸭子行为</span></div><div class="line">oMallardDuck.fly();</div><div class="line">oMallardDuck.quack();</div><div class="line"></div><div class="line"><span class="comment">// 原有的火鸡行为</span></div><div class="line">oWildTurkey.fly();</div><div class="line">oWildTurkey.gobble();</div><div class="line"></div><div class="line"><span class="comment">// 适配器火鸡的行为（火鸡调用鸭子的方法名称）</span></div><div class="line">oTurkeyAdapter.fly();</div><div class="line">oTurkeyAdapter.quack();</div></pre></td></tr></table></figure>
+<h3 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h3><p>模板方法<code>TemplateMethod</code>定义了一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+<p>模板方法是一种代码复用的基本技术，在类库中尤为重要，因为他们提取了类库中的公共行为。模板方法导致一种反向的控制结构，这种结构就是传说中的“好莱坞法则”，即“别找找我们，我们找你”，这指的是父类调用一个类的操作，而不是相反。具体体现是面向对象编程编程语言里的抽象类（以及其中的抽象方法），以及继承该抽象类（和抽象方法）的子类。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>一次性实现一个算法的不变的部分，并将可变的行为留给子类来实现</li>
+<li>各子类中公共的行为应被提取出来并集中到一个公共父类中的避免代码重复，不同之处分离为新的操作，最后，用一个钓鱼这些新操作的模板方法来替换这些不同的代码</li>
+<li>控制子类扩展，模板方法只在特定点调用“hook”操作，这样就允许在这些点进行扩展</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>和策略模式不同，模板方法使用继承来改变算法的一部分，而策略模式使用委托来改变整个算法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 举个例子，泡茶和泡咖啡有同样的步骤，比如烧开水（boilWater）、冲泡（brew）、倒在杯子里（pourOnCup），加小料（addCondiments）等等。但每种饮料冲泡的方法以及所加的小料不一样，所以我们可以利用模板方法实现这个主要步骤。</span></div><div class="line"></div><div class="line"><span class="comment">// 首先先来定义抽象步骤：</span></div><div class="line"><span class="keyword">var</span> CaffeineBeverage = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">&#125;;</div><div class="line">CaffeineBeverage.prototype.prepareRecipe = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.boilWater();</div><div class="line">    <span class="keyword">this</span>.brew();</div><div class="line">    <span class="keyword">this</span>.pourOnCup();</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.customerWantsCondiments()) &#123;</div><div class="line">        <span class="comment">// 如果可以想加小料，就加上</span></div><div class="line"> <span class="keyword">this</span>.addCondiments();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">CaffeineBeverage.prototype.boilWater = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"将水烧开!"</span>);</div><div class="line">&#125;;</div><div class="line">CaffeineBeverage.prototype.pourOnCup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"将饮料到再杯子里!"</span>);</div><div class="line">&#125;;</div><div class="line">CaffeineBeverage.prototype.brew = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"该方法必须重写!"</span>);</div><div class="line">&#125;;</div><div class="line">CaffeineBeverage.prototype.addCondiments = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"该方法必须重写!"</span>);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 默认加上小料</span></div><div class="line">CaffeineBeverage.prototype.customerWantsCondiments = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 该函数在原型上扩展了所有的基础步骤，以及主要步骤，冲泡和加小料步骤没有实现，供具体饮料所对应的函数来实现，另外是否加小料（customerWantsCondiments ）默认返回true，子函数重写的时候可以重写该值。</span></div><div class="line"></div><div class="line"><span class="comment">// 下面两个函数分别是冲咖啡和冲茶所对应的函数：</span></div><div class="line"><span class="comment">// 冲咖啡</span></div><div class="line"><span class="keyword">var</span> Coffee = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    CaffeineBeverage.apply(<span class="keyword">this</span>);</div><div class="line">&#125;;</div><div class="line">Coffee.prototype = <span class="keyword">new</span> CaffeineBeverage();</div><div class="line">Coffee.prototype.brew = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"从咖啡机想咖啡倒进去!"</span>);</div><div class="line">&#125;;</div><div class="line">Coffee.prototype.addCondiments = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"添加糖和牛奶"</span>);</div><div class="line">&#125;;</div><div class="line">Coffee.prototype.customerWantsCondiments = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> confirm(<span class="string">"你想添加糖和牛奶吗？"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//冲茶叶</span></div><div class="line"><span class="keyword">var</span> Tea = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    CaffeineBeverage.apply(<span class="keyword">this</span>);</div><div class="line">&#125;;</div><div class="line">Tea.prototype = <span class="keyword">new</span> CaffeineBeverage();</div><div class="line">Tea.prototype.brew = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"泡茶叶!"</span>);</div><div class="line">&#125;;</div><div class="line">Tea.prototype.addCondiments = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"添加柠檬!"</span>);</div><div class="line">&#125;;</div><div class="line">Tea.prototype.customerWantsCondiments = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> confirm(<span class="string">"你想添加柠檬嘛？"</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><p>原型模式<code>prototype</code>是指用原型实例指向创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+<p>对于原型模式，我们可以利用JavaScript特有的原型继承特性去创建对象的方式，也就是创建的一个对象作为另外一个对象的prototype属性值。原型对象本身就是有效地利用了每个构造器创建的对象，例如，如果一个构造函数的原型包含了一个name属性，那通过这个构造函数创建的对象都会有这个属性。</p>
+<p><strong>模式作用：</strong></p>
+<ol>
+<li>原型对象本身就是有效地利用了每个构造器创建的对象</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>注意浅拷贝和深拷贝的问题，免得出现引用问题</li>
+<li>在现有的文献里查看原型模式的定义，没有针对JavaScript的，你可能发现很多讲解的都是关于类的，但是现实情况是基于原型继承的JavaScript完全避免了类<code>class</code>的概念。我们只是简单从现有的对象进行拷贝来创建对象。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> vehiclePrototype = &#123;</div><div class="line">    <span class="attr">init</span>: <span class="function"><span class="keyword">function</span> (<span class="params">carModel</span>) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.model = carModel;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getModel</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'车辆模具是：'</span> + <span class="keyword">this</span>.model);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">vehicle</span>(<span class="params">model</span>) </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123; &#125;;</div><div class="line">    F.prototype = vehiclePrototype;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> f = <span class="keyword">new</span> F();</div><div class="line"></div><div class="line">    f.init(model);</div><div class="line">    <span class="keyword">return</span> f;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> car = vehicle(<span class="string">'福特Escort'</span>);</div><div class="line">car.getModel();</div></pre></td></tr></table></figure>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/05/09/JavaScript设计模式/"
+                     data-title="JavaScript设计模式"
+                     data-url="http://dumengjie.github.io/2017/05/09/JavaScript设计模式/"
+                     data-images="http://dumengjie.github.io/2017/05/09/JavaScript设计模式/article-bg7.jpg"
+                     data-content="
+学习极客学院课程JavaScript设计模式所做的笔记，参考了汤姆大叔的深入理解JavaSc... | DuMengjie&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/04/18/译-原生JS-DOM基本操作/" data-toggle="tooltip" data-placement="top"
+                           title="[译]原生JS DOM基本操作">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/05/09/JavaScript设计模式/"
+                         data-title="JavaScript设计模式"
+                         data-url="http://dumengjie.github.io/2017/05/09/JavaScript设计模式/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#单例模式"><span class="toc-text">单例模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数模式"><span class="toc-text">构造函数模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建造者模式"><span class="toc-text">建造者模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工厂模式"><span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外观模式"><span class="toc-text">外观模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代理模式"><span class="toc-text">代理模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观察者模式"><span class="toc-text">观察者模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略模式"><span class="toc-text">策略模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令模式"><span class="toc-text">命令模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器模式"><span class="toc-text">迭代器模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#职责链模式"><span class="toc-text">职责链模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适配器模式"><span class="toc-text">适配器模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板方法"><span class="toc-text">模板方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型模式"><span class="toc-text">原型模式</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'dumengjie';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
