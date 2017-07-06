@@ -131,291 +131,371 @@
 </script>
 
 <!-- Main Content -->
-
+<style>
+    .intro-header .site-heading {
+        margin: 50px;
+    }
+</style>
 
 <!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
                 <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg"/>
-                        <h5><a href="/about/">杜梦杰</a></h5>
-                        <p>华东程序猿 前端攻城狮</p>
-                    </div>
+                    <h1>archives</h1>
+                    <span class="subheading">可以根据归档日期检索所有文件</span>
                 </div>
             </div>
-        </header>
+        </div>
     </div>
-</div>
+</header>
+
 <!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
+<div class="container">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg')">
-    <a href="/2017/05/09/JavaScript设计模式/">
-        <h2 class="post-title">
-            JavaScript设计模式
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-05-09
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-学习极客学院课程JavaScript设计模式所做的笔记，参考了汤姆大叔的深入理解JavaScript系列文章。主要内容是各种设计模式的概念解读，作用和注意事项，现阶段对各种设计模式的理解并不是很深，实际运用到了之后再来补充。
-
-设计原则
-
-对扩展开放，对修改关闭
-子类继承父类，单独掉完全可以运..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg')">
-    <a href="/2017/04/18/译-原生JS-DOM基本操作/">
-        <h2 class="post-title">
-            [译]原生JS DOM基本操作
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-04-18
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-原文地址：https://www.sitepoint.com/dom-manipulation-vanilla-javascript-no-jquery/
-原文标题：The Basics of DOM Manipulation in Vanilla JavaScript (No jQuery)..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg')">
-    <a href="/2017/04/08/译-构建高性能展开-折叠动画/">
-        <h2 class="post-title">
-            [译]构建高性能展开&收缩动画
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-04-08
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-原文地址：https://developers.google.com/web/updates/2017/03/performant-expand-and-collapse
-原文标题：Building performant expand &amp; collapse animations
-原文作..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg')">
-    <a href="/2017/02/20/DOM元素类名操作/">
-        <h2 class="post-title">
-            DOM元素类名操作
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-02-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                前言类名操作是前端工程师编码过程中最频繁的操作之一，关于类名的操作基本可以总结为以下四种：
-
-addClass: 为指定的dom元素添加样式
-removeClass: 删除指定dom元素的样式
-toggleClass: 如果存在(不存在)，就删除(添加)一个样式
-hasClass: 判断样式是否..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg"/>
-                    
-                    <h5><a href="/about/">杜梦杰</a></h5>
-                    
-                    <p>华东程序猿 前端攻城狮</p>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- archive list -->
+            
+				
+				
+				
+					
+					
+					<div class="archive archive-year" data-date="2017">
+						<h2 class="archive-title">
+						<span class="fa fa-archive">
+							<a href="/archives/2017">2017</a>
+						</span>
+						</h2>
+				
+				
+					
+					
+					<div class="archive archive-month" data-date="201705">
+						<h3 class="archive-title">
+							<a href="/archives/2017/05">05</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/05/09/JavaScript设计模式/">
+                        <h4 class="post-title">
+                            JavaScript设计模式
+                        </h4>
                         
-                        
-                        
-                        <li>
-                            <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="http://weibo.com/dumengjie2016">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/DuMengjie">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                    </ul>
+                    </a>
                 </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
+				<hr>
+				</div>
             
-            <section>
-                <div class="tags">
-                    
-                    
-                    <a href="/tags/#CSS3" title="CSS3"
-                       rel="3">CSS3</a>
-                    
-                    
-                    
-                    <a href="/tags/#前端" title="前端"
-                       rel="8">前端</a>
-                    
-                    
-                    
-                    <a href="/tags/#JS" title="JS"
-                       rel="4">JS</a>
-                    
-                    
-                    
-                    <a href="/tags/#HTML5" title="HTML5"
-                       rel="1">HTML5</a>
-                    
-                    
-                    
-                    <a href="/tags/#MOOC" title="MOOC"
-                       rel="1">MOOC</a>
-                    
-                    
-                    
-                    <a href="/tags/#jQuery" title="jQuery"
-                       rel="2">jQuery</a>
-                    
-                    
-                    
-                    <a href="/tags/#jQuery插件" title="jQuery插件"
-                       rel="1">jQuery插件</a>
-                    
-                    
-                    
-                    <a href="/tags/#读书笔记" title="读书笔记"
-                       rel="6">读书笔记</a>
-                    
-                    
-                    
-                    <a href="/tags/#英语" title="英语"
-                       rel="1">英语</a>
-                    
-                    
-                    
-                    <a href="/tags/#CSS" title="CSS"
-                       rel="1">CSS</a>
-                    
-                    
-                    
-                    <a href="/tags/#动画" title="动画"
-                       rel="1">动画</a>
-                    
-                    
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201704">
+						<h3 class="archive-title">
+							<a href="/archives/2017/04">04</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/04/18/译-原生JS-DOM基本操作/">
+                        <h4 class="post-title">
+                            [译]原生JS DOM基本操作
+                        </h4>
+                        
+                    </a>
                 </div>
-            </section>
+				<hr>
+				</div>
             
-
+				
+				
+				
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/04/08/译-构建高性能展开-折叠动画/">
+                        <h4 class="post-title">
+                            [译]构建高性能展开&收缩动画
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
             
-            <hr>
-            <h5 style="text-align: center;">Friends</h5>
-            <ul class="list-inline" style="text-align: center;">
-                
-                <li><a href="http://jyoung.im/" target="_blank">JYoung</a></li>
-                
-            </ul>
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201703">
+						<h3 class="archive-title">
+							<a href="/archives/2017/03">03</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/03/04/CSS实现折叠面板/">
+                        <h4 class="post-title">
+                            CSS实现折叠面板
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
             
-
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201702">
+						<h3 class="archive-title">
+							<a href="/archives/2017/02">02</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/02/21/网页加载动画/">
+                        <h4 class="post-title">
+                            网页加载动画
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/02/20/DOM元素类名操作/">
+                        <h4 class="post-title">
+                            DOM元素类名操作
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/02/17/Typed-js-输入模拟插件/">
+                        <h4 class="post-title">
+                            Typed.js-输入模拟插件
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/02/13/元素的水平及垂直居中/">
+                        <h4 class="post-title">
+                            元素的水平及垂直居中
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201701">
+						<h3 class="archive-title">
+							<a href="/archives/2017/01">01</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2017/01/11/精进——如何成为一个很厉害的人/">
+                        <h4 class="post-title">
+                            精进——如何成为一个很厉害的人
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+					
+					</div><!--month-->
+					</div><!--year-->
+					
+					
+					
+					<div class="archive archive-year" data-date="2016">
+						<h2 class="archive-title">
+						<span class="fa fa-archive">
+							<a href="/archives/2016">2016</a>
+						</span>
+						</h2>
+				
+				
+					
+					
+					<div class="archive archive-month" data-date="201612">
+						<h3 class="archive-title">
+							<a href="/archives/2016/12">12</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2016/12/24/人人都能用英语/">
+                        <h4 class="post-title">
+                            人人都能用英语
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2016/12/16/如何高效学习/">
+                        <h4 class="post-title">
+                            如何高效学习
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201610">
+						<h3 class="archive-title">
+							<a href="/archives/2016/10">10</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2016/10/12/暗时间/">
+                        <h4 class="post-title">
+                            暗时间
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2016/10/10/Learning-How-to-Learn/">
+                        <h4 class="post-title">
+                            Learning How to Learn
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201607">
+						<h3 class="archive-title">
+							<a href="/archives/2016/07">07</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2016/07/31/少有人走的路/">
+                        <h4 class="post-title">
+                            少有人走的路
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
+				
+				
+				
+				
+					
+					</div><!--month-->
+					
+					
+					<div class="archive archive-month" data-date="201601">
+						<h3 class="archive-title">
+							<a href="/archives/2016/01">01</a>
+						</h3>
+				
+				<div class="one-tag-list">
+                <div class="post-preview">
+                    <a href="/2016/01/08/高效能人士的七个习惯/">
+                        <h4 class="post-title">
+                            高效能人士的七个习惯
+                        </h4>
+                        
+                    </a>
+                </div>
+				<hr>
+				</div>
+            
         </div>
     </div>
 </div>
