@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        使用FileReader进行文件读取｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2017/07/13/使用FileReader进行文件读取/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>使用FileReader进行文件读取</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2017-07-13
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            使用FileReader进行文件读取
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>最近在做的一个项目，需要读取用户上传的文件并进行本地存储，学习了一下FileReader。</p>
+<p>本文简单介绍了FileReader以及两个FileReader的使用场景：文件读取和图片预览。</p>
+<p>DEMO： <a href="https://dumengjie.github.io/blog-examples/FileReader/">https://dumengjie.github.io/blog-examples/FileReader/</a></p>
+<p>扩展阅读：<a href="https://dumengjie.github.io/2017/07/09/%E4%BD%BF%E7%94%A8localStorage%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/">使用localStorage进行本地存储</a></p>
+</blockquote>
+<h2 id="FileReader是什么"><a href="#FileReader是什么" class="headerlink" title="FileReader是什么"></a>FileReader是什么</h2><p><strong>FileReader</strong>对象允许Web应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容，使用 <code>File</code> 或 <code>Blob</code> 对象指定要读取的文件或数据。</p>
+<p>其中File对象可以是来自用户在一个<input>元素上选择文件后返回的<code>FileList</code>对象,也可以来自拖放操作生成的 <code>DataTransfer</code>对象,还可以是来自在一个<code>HTMLCanvasElement</code>上执行<code>mozGetAsFile()</code>方法后返回结果。</p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p><code>FileReader()</code>返回一个新构造的<code>FileReader</code>。</p>
+<p>想要创建一个<code>FileReader</code>对象,很简单,如下:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</div></pre></td></tr></table></figure>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>FileReader接口有4个方法，其中3个用来读取文件，另一个用来中断读取。无论读取成功或失败，方法并不会返回读取结果，这一结果存储在result属性中。</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>readAsBinaryString</td>
+<td>file</td>
+<td>将文件读取为二进制编码</td>
+</tr>
+<tr>
+<td>readAsText</td>
+<td>file,[encoding]</td>
+<td>将文件读取为文本</td>
+</tr>
+<tr>
+<td>readAsDataURL</td>
+<td>file</td>
+<td>将文件读取为DataURL</td>
+</tr>
+<tr>
+<td>abort</td>
+<td>(none)</td>
+<td>终端读取操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h3><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>调用时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onabort</td>
+<td>当读取操作被中止时调用</td>
+</tr>
+<tr>
+<td>onerror</td>
+<td>当读取操作发生错误时调用</td>
+</tr>
+<tr>
+<td>onload</td>
+<td>当读取操作成功完成时调用</td>
+</tr>
+<tr>
+<td>onloadend</td>
+<td>当读取操作完成时调用,不管是成功还是失败.该处理程序在<code>onload</code>或者<code>onerror</code>之后调用</td>
+</tr>
+<tr>
+<td>onloadstart</td>
+<td>当读取操作将要开始之前调用</td>
+</tr>
+<tr>
+<td>onprogress</td>
+<td>在读取数据过程中周期性调用</td>
+</tr>
+</tbody>
+</table>
+<p>了解了这些基本上就可以进行开发了，如果想了解更多，请阅读<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader" target="_blank" rel="external">FileReader</a>。</p>
+<h2 id="读取文本"><a href="#读取文本" class="headerlink" title="读取文本"></a>读取文本</h2><p>对于<code>type=&quot;file&quot;</code>的<code>input</code>元素，用户选择文件上传后会生成一个<code>FileList</code>对象，结构如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// FileList对象</span></div><div class="line">&#123;</div><div class="line">  <span class="number">0</span>: &#123;</div><div class="line">    <span class="attr">lastModified</span>: <span class="number">1482289489971</span>，</div><div class="line">    lastModifiedDate: Wed Dec <span class="number">21</span> <span class="number">2016</span> <span class="number">11</span>:<span class="number">04</span>:<span class="number">49</span> GMT+<span class="number">0800</span>，</div><div class="line">    name: <span class="string">"index.html"</span>，</div><div class="line">    size: <span class="number">1325</span>，</div><div class="line">    type: <span class="string">"text/html"</span>，</div><div class="line">  &#125;,</div><div class="line">  <span class="number">1</span>: &#123;</div><div class="line">    ...</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">length</span>: <span class="number">2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们从中可以获取文件名、修改时间、大小和文件类型等信息，文件内容也是包含在里面的，不过需要<code>FileReader</code>的读取文件方法才能获取，对于纯文本，我们使用<code>readAsText</code>方法，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">//FileReader读取文件内容</span></div><div class="line"><span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</div><div class="line">reader.readAsText(files[<span class="number">0</span>], <span class="string">'UTF-8'</span>);</div><div class="line">reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  	<span class="comment">// urlData就是对应的文件内容</span></div><div class="line">	<span class="keyword">var</span> urlData = <span class="keyword">this</span>.result;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>为了大家更直观的理解，我写了个<a href="https://dumengjie.github.io/blog-examples/FileReader/">demo</a>，配合<code>localStorage</code>实现本地文件读取与本地存储，对于<code>localStorage</code>的使用，请查看<a href="https://dumengjie.github.io/2017/07/09/%E4%BD%BF%E7%94%A8localStorage%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/">使用localStorage进行本地存储</a>。</p>
+<h2 id="图片预览"><a href="#图片预览" class="headerlink" title="图片预览"></a>图片预览</h2><p><code>FileReader</code>的另一个文件读取方法<code>readAsDataURL</code>，可以将图片文件转换为<code>base64</code>编码。这个方法非常有用，可以实现本地图片预览，直接上个MDN的<a href="https://mdn.mozillademos.org/files/3698/image_upload_preview.html" target="_blank" rel="external">demo</a>，源码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!doctype html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Image preview example<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">oFReader = <span class="keyword">new</span> FileReader(), rFilter = <span class="regexp">/^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i</span>;</div><div class="line"></div><div class="line">oFReader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">oFREvent</span>) </span>&#123;</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">"uploadPreview"</span>).src = oFREvent.target.result;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImageFile</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="built_in">document</span>.getElementById(<span class="string">"uploadImage"</span>).files.length === <span class="number">0</span>) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">  <span class="keyword">var</span> oFile = <span class="built_in">document</span>.getElementById(<span class="string">"uploadImage"</span>).files[<span class="number">0</span>];</div><div class="line">  <span class="keyword">if</span> (!rFilter.test(oFile.type)) &#123; alert(<span class="string">"You must select a valid image file!"</span>); <span class="keyword">return</span>; &#125;</div><div class="line">  oFReader.readAsDataURL(oFile);</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"loadImageFile();"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"uploadForm"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"uploadPreview"</span> <span class="attr">style</span>=<span class="string">"width: 100px; height: 100px;"</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">alt</span>=<span class="string">"Image preview"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"uploadImage"</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"myPhoto"</span> <span class="attr">onchange</span>=<span class="string">"loadImageFile();"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Send"</span> /&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/07/09/使用localStorage进行本地存储/" data-toggle="tooltip" data-placement="top"
+                           title="使用localStorage进行本地存储">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="352296085@qq.com">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#FileReader是什么"><span class="toc-text">FileReader是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法"><span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理程序"><span class="toc-text">事件处理程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读取文本"><span class="toc-text">读取文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片预览"><span class="toc-text">图片预览</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
