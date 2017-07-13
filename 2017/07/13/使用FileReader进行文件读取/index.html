@@ -194,7 +194,7 @@
 <p>扩展阅读：<a href="https://dumengjie.github.io/2017/07/09/%E4%BD%BF%E7%94%A8localStorage%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/">使用localStorage进行本地存储</a></p>
 </blockquote>
 <h2 id="FileReader是什么"><a href="#FileReader是什么" class="headerlink" title="FileReader是什么"></a>FileReader是什么</h2><p><strong>FileReader</strong>对象允许Web应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容，使用 <code>File</code> 或 <code>Blob</code> 对象指定要读取的文件或数据。</p>
-<p>其中File对象可以是来自用户在一个<input>元素上选择文件后返回的<code>FileList</code>对象,也可以来自拖放操作生成的 <code>DataTransfer</code>对象,还可以是来自在一个<code>HTMLCanvasElement</code>上执行<code>mozGetAsFile()</code>方法后返回结果。</p>
+<p>其中File对象可以是来自用户在一个<code>input</code>元素上选择文件后返回的<code>FileList</code>对象,也可以来自拖放操作生成的 <code>DataTransfer</code>对象,还可以是来自在一个<code>HTMLCanvasElement</code>上执行<code>mozGetAsFile()</code>方法后返回结果。</p>
 <h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p><code>FileReader()</code>返回一个新构造的<code>FileReader</code>。</p>
 <p>想要创建一个<code>FileReader</code>对象,很简单,如下:</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</div></pre></td></tr></table></figure>
