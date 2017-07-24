@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        [译]高性能视差滚动｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2017/07/24/译-高性能视差滚动/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>[译]高性能视差滚动</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2017-07-24
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#动画"
+                           title="动画">动画</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            [译]高性能视差滚动
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>原文地址：<a href="https://developers.google.com/web/updates/2016/12/performant-parallaxing" target="_blank" rel="external">https://developers.google.com/web/updates/2016/12/performant-parallaxing</a></p>
+<p>原文标题：Performant Parallaxing</p>
+<p>原文作者：<a href="https://developers.google.com/web/resources/contributors#paullewis" target="_blank" rel="external">Paul Lewis</a>, <a href="https://developers.google.com/web/resources/contributors#flackr" target="_blank" rel="external">Robert Flack</a></p>
+<p>翻译：<a href="https://dumengjie.github.io/">杜梦杰</a></p>
+<p>示例：<a href="https://googlechrome.github.io/ui-element-samples/parallax/" target="_blank" rel="external">https://googlechrome.github.io/ui-element-samples/parallax/</a></p>
+</blockquote>
+<p>明智地使用视差滚动效果，可以使你的<code>web app</code>更加精妙。但问题是实现高效的视差滚动是很有挑战性的。本文中我们会讨论一个既高性能又可以跨浏览器工作的解决方案。</p>
+<p><img src="parallax.jpg" alt="parallax"></p>
+<p><strong>TL;DR</strong></p>
+<ul>
+<li>不要使用滚动事件<code>scroll events</code>或者背景位置<code>background-position</code>来实现视差滚动动画。</li>
+<li>使用三维变形<code>CSS 3D transforms</code>创造更加精准的是视差效果。</li>
+<li>对于移动版Safari浏览器使用<code>position: sticky</code>属性确保视差效果被正确传递。</li>
+</ul>
+<p>如果你想要一个开箱即用的解决方案，请前往<a href="https://github.com/GoogleChrome/ui-element-samples" target="_blank" rel="external">UI Element Samples GitHub repo</a>并阅读<a href="https://github.com/GoogleChrome/ui-element-samples/blob/gh-pages/parallax/scripts/parallax.js" target="_blank" rel="external">Parallax helper JS</a>。在这个仓库里可以看到一个在线的<a href="http://googlechrome.github.io/ui-element-samples/parallax/" target="_blank" rel="external">demo</a>。</p>
+<h2 id="有问题的视差滚动"><a href="#有问题的视差滚动" class="headerlink" title="有问题的视差滚动"></a>有问题的视差滚动</h2><p>首先，我们来看一下两种最常见的实现视差效果的方法，并着重了解为什么它们不适合用来实现视差滚动。</p>
+<h3 id="Bad-利用滚动事件"><a href="#Bad-利用滚动事件" class="headerlink" title="Bad: 利用滚动事件"></a>Bad: 利用滚动事件</h3><p>视差滚动的核心要求是滚动配对<code>scroll-coupled</code>：每当页面的滚动位置<code>scroll position</code>改变，元素的位置都要更新。尽管听起来很简单，但是现代浏览器的一个重要机制就是异步工作<code>work asynchronously</code>。这个机制对于滚动事件也适用。在大多数浏览器中滚动事件都是以最好性能<code>best effort</code>为原则来进行传递的，并不保证在滚动动画的每一帧都会进行传递！</p>
+<p>通过这一关键信息我们可以知道，对于根据滚动事件来移动元素的情况，要避免使用基于JS<code>JavaScript-based</code>的解决方案：<strong>JS并不保证视差滚动与页面滚动位置同步</strong>。在旧版本的移动版Safari中，滚动事件是在滚动结束时才进行传递的，这样根本不可能实现基于JS的滚动效果。在最新的一些版本中滚动事件确实是在动画过程中传递的，但与Chrome类似，是基于最好性能<code>best effort</code>原则的。一旦主线程繁忙，滚动事件就不会立刻传递，这就意味着视差效果将会被破坏。</p>
+<h3 id="Bad-更新背景位置"><a href="#Bad-更新背景位置" class="headerlink" title="Bad: 更新背景位置"></a>Bad: 更新背景位置</h3><p>我们要尽量避免的另一种情况是每一帧都渲染。有很多方法试图改变背景图片位置<code>background-position</code>来实现视差效果，这样会导致浏览器在滚动时重绘页面的相关部分，这是非常耗费性能的，会对动画造成明显的破坏。</p>
+<p>如果想要保证视差滚动，我们需要一些不依赖于滚动事件的动态属性<code>accelerated property</code>。</p>
+<h2 id="CSS-3D"><a href="#CSS-3D" class="headerlink" title="CSS 3D"></a>CSS 3D</h2><p><a href="http://codepen.io/scottkellum/details/bHEcA" target="_blank" rel="external">Scott Kellum</a>和<a href="http://keithclark.co.uk/articles/pure-css-parallax-websites/demo3/" target="_blank" rel="external">Keith Clark</a>在使用CSS 3D实现视差滚动方面卓有成就，他们使用的方法如下：</p>
+<ul>
+<li>将要滚动的容器元素属性设置为<code>overflow-y: scroll</code>（和<code>overflow-x:hidden</code>）。</li>
+<li>对同一个元素应用<code>perspective</code>值，并将<code>perspective-origin</code>设置为<code>top left</code>或<code>0  0</code>。</li>
+<li>对容器元素的子元素应用Z轴变形，通过缩放子元素实现视差效果，注意不要影响到它们在屏幕上的大小。</li>
+</ul>
+<p>这种实现方式的代码如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">overflow-x</span>: hidden;</div><div class="line">  <span class="attribute">overflow-y</span>: scroll;</div><div class="line">  <span class="attribute">perspective</span>: <span class="number">1px</span>;</div><div class="line">  <span class="attribute">perspective-origin</span>: <span class="number">0</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.parallax-child</span> &#123;</div><div class="line">  <span class="attribute">transform-origin</span>: <span class="number">0</span> <span class="number">0</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translateZ</span>(-2px) <span class="built_in">scale</span>(3);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的HTML如下：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container”&gt;</span></span></div><div class="line">  &lt;div class="<span class="attr">parallax-child</span>”&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="调整缩放以符合透视"><a href="#调整缩放以符合透视" class="headerlink" title="调整缩放以符合透视"></a>调整缩放以符合透视</h3><p>将子元素向后推会使其在透视上占的比例更小。我们可以用<strong>（透视距离-移动距离）/  透视距离</strong><code>(perspective - distance) / perspective</code>这个公式计算出元素需要放大多少。我们需要让元素视差滚动但是还要保持大小，所以需要将其以这种方式缩放，而不是置之不理。</p>
+<p>在上面的代码中，透视距离是1px，视差子元素的Z轴透视距离是-2px。这样的话元素需要放大三倍，正如代码中所写的：<code>scale(3)</code>。</p>
+<p>对于任何没有应用<code>translateZ</code>值的内容，其移动距离可以用0来代替。就是<code>(perspective - 0) / perspective</code>，其值为1，既不放大也不缩小。</p>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p>理解这种方法的原理很重要，因为我们马上用到这些知识。滚动实际上也是一种变换<code>transform</code>，这就是为什么滚动可以被加速；它主要涉及到改变GPU周围的层。在典型的滚动中，即不涉及透视，滚动元素和和它的子元素的改变是1:1的。如果一个元素向下滚动300px，那子元素向上变换同样的值300px。</p>
+<p>但是，对滚动元素应用透视值扰乱了这个过程；它会改变滚动变换的基础矩阵。滚动300px距离可能子元素只会移动150px，取决于你设定的<code>perspective</code>和<code>translateZ</code>值。如果某元素的<code>translateZ</code>值是0，那它就会以1:1的比例滚动（正常模式），但是在Z轴上远离透视原点的子元素会以不同的比率滚动！这样就产生了视差滚动。非常重要的是，这一过程作为浏览器内部滚动机制一部分自动处理，无需监听滚动事件或改变背景位置。</p>
+<h2 id="美中不足：移动版Safari"><a href="#美中不足：移动版Safari" class="headerlink" title="美中不足：移动版Safari"></a>美中不足：移动版Safari</h2><p>每种效果都有需要注意的地方，对于变换而言，一个重要注意事项是关于保护子元素的3D效果的。如果在透视元素和它的视差子元素之间的层级内有其他元素，那么3D透视将被“展平”<code>flattened</code>（降维打击😶），意味着效果将丢失。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;div class="container”&gt;</div><div class="line">  &lt;div class="parallax-container”&gt;</div><div class="line">    &lt;div class="parallax-child”&gt;&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<p>在上面的HTML中，<code>.parallax-container</code>是个新元素，它实际上会展平<code>perspective</code>值，使视差滚动失效。大部分情况下，解决方案相当直接：为元素添加<code>transform-style: preserve-3d</code>属性，使其能传递任何已应用于DOM树中的3D效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">.parallax-container &#123;</div><div class="line">  transform-style: preserve<span class="number">-3</span>d;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是在移动版Safari上，情况就有些复杂了。为容器元素应用<code>overflow-y: scroll</code>技术上是可行的，但要以牺牲滚动元素为代价。解决方法是添加<code>-webkit-overflow-scrolling: touch</code>，但这也会展平<code>perspective</code>，得不到任何视差效果。</p>
+<p>从渐进增强的角度来看，这可能不是什么大问题。如果某些情况下不能视差滚动，我们的应用仍然可以正常工作，但如果能找出一个解决方案也是很好的。</p>
+<h3 id="救世主来了position-sticky！"><a href="#救世主来了position-sticky！" class="headerlink" title="救世主来了position: sticky！"></a>救世主来了position: sticky！</h3><p><code>position: sticky</code>（还没有标准的中文译名，本文统一翻译成<strong>粘性定位</strong>）属性允许元素在滚动时附着在视口或给定元素的顶部。这个属性和大多数<code>position</code>属性一样很笨重，但是却有一个很好的点：</p>
+<blockquote>
+<p>粘性定位的元素与相对定位的元素定位方式类似，但是其偏移量是以最近的有滚动框的祖先元素为参照的，如果祖先元素都没有滚动框则以视口为参照。-<a href="https://www.w3.org/TR/css-position-3/#sticky-pos" target="_blank" rel="external">CSS Positioned Layout Module Level 3</a></p>
+</blockquote>
+<p>乍看之下好像没什么用，这个信息的关键就在于对元素stickiness计算的解读：<strong>“其偏移量是以最近的有滚动框的祖先元素为参照的”</strong>。换句话说，粘性定位元素的移动距离（使其附着在其他元素或视口上的距离）是在其他变换执行之前就计算好的，而不是之后。这就意味着，就像之前的例子一样，如果计算出的偏移值是300px，就有机会通过使用透视（或任何其他变换）在应用到元素上之前处理偏移值。</p>
+<p>通过为视差滚动元素应用<code>position: -webkit-sticky</code>属性，可以有效的逆转<code>-webkit-overflow-scrolling: touch</code>的展平效果。这保证了视差元素会以最近的具有滚动框的祖先元素作为参照，本情况下是<code>.container</code>元素。然后，和之前类似，<code>.parallax-container</code>元素应用<code>perspective</code>值，这会改变计算出的滚动偏移值并创造出视差效果。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;div class="container”&gt;</div><div class="line">  &lt;div class="parallax-container”&gt;</div><div class="line">    &lt;div class="parallax-child”&gt;&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">.container &#123;</div><div class="line">  overflow-y: scroll;</div><div class="line">  -webkit-overflow-scrolling: touch;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.parallax-container &#123;</div><div class="line">  perspective: 1px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.parallax-child &#123;</div><div class="line">  position: -webkit-sticky;</div><div class="line">  top: 0px;</div><div class="line">  transform: translate(-2px) scale(3);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样移动版Safari上也可以实现视差滚动了，确实是个好消息！</p>
+<h2 id="粘性定位注意事项"><a href="#粘性定位注意事项" class="headerlink" title="粘性定位注意事项"></a>粘性定位注意事项</h2><p>有一点需要注意的是：<code>position: sticky</code>确实改变了视差的机制。粘性定位试图将元素附着在滚动容器内，而非粘性定位则不会这样。这意味着通过粘性定位实现的视差滚动和非粘性实现的视差滚动是完全相反的：</p>
+<ul>
+<li>有<code>position: sticky</code>属性，元素离z=0越近，移动的越少。</li>
+<li>没有<code>position: sticky</code>属性，元素离z=0越近，移动的越多。</li>
+</ul>
+<p>如果有点难理解，可以看一下Robert Flack的这个<a href="https://jsbin.com/sexiwe/edit?html,css,js,output" target="_blank" rel="external">demo</a>，展示了有无<code>position: sticky</code>的元素行为上的差异。要看出效果需要使用Chrome或Safari。</p>
+<p><img src="jsbin.jpg" alt="jsbin"></p>
+<h2 id="BUG和解决方案"><a href="#BUG和解决方案" class="headerlink" title="BUG和解决方案"></a>BUG和解决方案</h2><p>与任何事情一样，仍有许多小问题需要处理：</p>
+<ul>
+<li>各浏览器对粘性的支持性不一致。Chrome是支持的，Edge完全不支持，在Firefox上，当粘性定位和透视变换<code>perspevtive transform</code>组合使用时有<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1254260" target="_blank" rel="external">渲染bug</a>。如果需要的话，增加一句额外的代码<code>position: -webkit-sticky</code>就能解决移动版Safari的兼容问题，性价比还是很高的。</li>
+<li>视差效果在Edge里不会执行。Edge浏览器在OS层来处理滚动，这通常是个好事，但是在这种情况下则阻止检测到滚动中的透视变化。可以加一个固定定位元素来修复，参考<a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/5084491/" target="_blank" rel="external">这篇文章</a>。</li>
+<li>页面体积变得太大了！许多浏览器在计算页面体积时会考虑到缩放，但可惜的是Chrome和Safari并没有考虑到透视。所以如果元素被放大了三倍，即使在经过透视处理后其实没有放大，你也会看到滚动条。这个问题可以通过将元素的变形原点放到右下角<code>transform-origin: bottom right</code>来解决， 原理是元素放大的部分进入到了滚动区域负区域<code>negative region</code>内（通常实在左上方），滚动区域是不会看到负区域的内容的。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果能合理的使用的话，视差滚动其实是个非常有趣的特效。如你所见，我们可以高性能、跨浏览器地将其实现。由于视差滚动需要一点数学知识和少量的模板来得到想要的效果，我们为你们打包好了一个帮助库和示例，链接在这里 <a href="https://github.com/GoogleChrome/ui-element-samples/tree/gh-pages/parallax" target="_blank" rel="external">UI Element Samples GitHub repo</a>。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/07/13/使用FileReader进行文件读取/" data-toggle="tooltip" data-placement="top"
+                           title="使用FileReader进行文件读取">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="352296085@qq.com">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#有问题的视差滚动"><span class="toc-text">有问题的视差滚动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bad-利用滚动事件"><span class="toc-text">Bad: 利用滚动事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bad-更新背景位置"><span class="toc-text">Bad: 更新背景位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-3D"><span class="toc-text">CSS 3D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#调整缩放以符合透视"><span class="toc-text">调整缩放以符合透视</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作原理"><span class="toc-text">工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#美中不足：移动版Safari"><span class="toc-text">美中不足：移动版Safari</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#救世主来了position-sticky！"><span class="toc-text">救世主来了position: sticky！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#粘性定位注意事项"><span class="toc-text">粘性定位注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BUG和解决方案"><span class="toc-text">BUG和解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#CSS3"
+                           title="CSS3">CSS3</a>
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#动画"
+                           title="动画">动画</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                        <li><a href="http://blog.xiaojay.cn/">xiaoJay</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
