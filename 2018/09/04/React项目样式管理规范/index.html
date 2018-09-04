@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        React项目样式管理规范｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2018/09/04/React项目样式管理规范/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>React项目样式管理规范</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2018-09-04
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#React"
+                           title="React">React</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            React项目样式管理规范
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>在最近的工作中，大大小小已开发过数个基于React的前端项目，从一开始的单打独斗到现在的多人协作开发，由于缺乏规范，样式管理一直是开发中的痛点，样式污染，难以定制化，依赖性高，各种问题层出不穷。痛定思痛，我们针对开发中遇到的问题并总结开发中的实际经验和网上的主流解决方案，最终形成一套样式管理规范。</p>
+<p>本文首先对样式进行了分类，然后详细讲解了不同类别样式的管理方法。本样式管理规范只针对我们的项目，但对其他React项目也有普遍适用性，可以根据自己的需求进行个性化的定制与修改。</p>
+<h2 id="样式分类"><a href="#样式分类" class="headerlink" title="样式分类"></a>样式分类</h2><p>对于React项目，可以大致将样式分为四类：</p>
+<ol>
+<li>公共样式</li>
+<li>第三方样式</li>
+<li>容器样式，即<code>container</code>样式</li>
+<li>组件样式，即<code>component</code>样式</li>
+</ol>
+<p>前两类样式的管理与传统前端项目并无差异，React项目的重点在于后两类样式的管理。</p>
+<h2 id="公共样式"><a href="#公共样式" class="headerlink" title="公共样式"></a>公共样式</h2><p>主要包括：</p>
+<ol>
+<li><code>reset</code>——样式重置及设置默认值，通常包括<code>normalize.css</code>和<code>base.css</code>，可根据需求定制</li>
+<li><code>layout</code>——项目主体框架布局的相关样式</li>
+<li><code>variable</code>——存放sass变量，主要包括各种主题颜色、按钮颜色</li>
+<li><code>mixin</code>——可复用的样式片段，包括清除浮动、圆角边框、文本溢出省略显示、文本强制换行</li>
+</ol>
+<p><strong>引入方式：</strong>reset样式在入口文件<code>index.html</code>中通过<code>link</code>标签引入，layout也可以在<code>index.html</code>引入。如果在layout中使用sass，可以与其他文件统一放在styles文件夹中，在<code>index.js</code>中引入。对于variable和mixin，同样放在styles文件夹中，如果文件体积较小，可以合并成一个文件。</p>
+<p><img src="index.png" alt="index"></p>
+<p><strong>variable.scss</strong></p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 主色</span></div><div class="line"><span class="variable">$primary-color</span>          : <span class="number">#5a8def</span>;</div><div class="line"></div><div class="line"><span class="comment">// 标准色</span></div><div class="line"><span class="variable">$green</span>                  : <span class="number">#117511</span>;</div><div class="line"><span class="variable">$red</span>                    : <span class="number">#950505</span>;</div><div class="line"><span class="variable">$blue</span>                   : <span class="number">#5a8def</span>;</div><div class="line"></div><div class="line"><span class="comment">// 文字颜色、标题颜色、背景颜色、字体大小</span></div><div class="line"><span class="variable">$body-background</span>        : <span class="number">#fff</span>;</div><div class="line"><span class="variable">$text-color</span>             : <span class="number">#666</span>;</div><div class="line"><span class="variable">$text-color-secondary</span>   : <span class="number">#999</span>;</div><div class="line"><span class="variable">$font-size-sm</span>           : <span class="number">12px</span>;</div><div class="line"><span class="variable">$font-size-base</span>         : <span class="number">12px</span>;</div><div class="line"><span class="variable">$font-size-lg</span>           : <span class="number">14px</span>;</div><div class="line"></div><div class="line"><span class="comment">// 边框颜色以及圆角</span></div><div class="line"><span class="variable">$border-color-base</span>      : <span class="number">#d9d9d9</span>;        </div><div class="line"><span class="variable">$border-color-split</span>     : <span class="number">#e9e9e9</span>;        </div><div class="line"><span class="variable">$border-base</span>            : <span class="number">1px</span> solid <span class="number">#d9d9d9</span>;</div><div class="line"><span class="variable">$border-split</span>           : <span class="number">1px</span> solid <span class="number">#e9e9e9</span>;</div><div class="line"><span class="variable">$border-radius-base</span>     : <span class="number">0px</span>;</div><div class="line"><span class="variable">$border-radius-lg</span>       : <span class="number">4px</span>;</div><div class="line"></div><div class="line"><span class="comment">// 行高</span></div><div class="line"><span class="variable">$line-height-sm</span>         : <span class="number">28px</span>;</div><div class="line"><span class="variable">$line-height-normal</span>     : <span class="number">30px</span>;</div><div class="line"><span class="variable">$line-height-lg</span>         : <span class="number">36px</span>;</div><div class="line"></div><div class="line"><span class="comment">// 间距</span></div><div class="line"><span class="variable">$space-sm</span>               : <span class="number">5px</span>;</div><div class="line"><span class="variable">$space-base</span>             : <span class="number">10px</span>;</div><div class="line"><span class="variable">$space-lg</span>               : <span class="number">20px</span>;</div></pre></td></tr></table></figure>
+<p><strong>mixin.scss</strong></p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 清除浮动</span></div><div class="line">@<span class="keyword">mixin</span> clearfix() &#123;</div><div class="line">    &amp;:before,</div><div class="line">    &amp;:after &#123;</div><div class="line">        <span class="attribute">content</span>: <span class="string">""</span>;</div><div class="line">        <span class="attribute">display</span>: table;</div><div class="line">    &#125;</div><div class="line">    &amp;:after &#123;</div><div class="line">        <span class="attribute">clear</span>: both;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">    @<span class="keyword">include</span> clearfix;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 圆角边框</span></div><div class="line">@<span class="keyword">mixin</span> border-radius(<span class="variable">$radius</span>) &#123;</div><div class="line">    -webkit-<span class="attribute">border-radius</span>: <span class="variable">$radius</span>;</div><div class="line">     -moz-<span class="attribute">border-radius</span>: <span class="variable">$radius</span>;</div><div class="line">      -ms-<span class="attribute">border-radius</span>: <span class="variable">$radius</span>;</div><div class="line">          <span class="attribute">border-radius</span>: <span class="variable">$radius</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">    @<span class="keyword">include</span> border-radius(<span class="number">10px</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 文本溢出省略显示</span></div><div class="line">@<span class="keyword">mixin</span> text-ellipsis () &#123;</div><div class="line">    <span class="attribute">white-space</span>: nowrap;</div><div class="line">    <span class="attribute">overflow</span>: hidden;</div><div class="line">    <span class="attribute">text-overflow</span>: ellipsis;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="第三方样式"><a href="#第三方样式" class="headerlink" title="第三方样式"></a>第三方样式</h2><p>主要是第三方类库的依赖样式，一般通过<code>link</code>标签引入。</p>
+<p><strong>引入方式：</strong>在<code>index.html</code>通过<code>link</code>标签引入</p>
+<h2 id="容器样式"><a href="#容器样式" class="headerlink" title="容器样式"></a>容器样式</h2><p>容器即container，一般不为container单独编写样式文件，将所有容器的样式提取到一个文件中（暂定为<code>container.scss</code>，放在styles文件夹中），这样可以避免样式污染，提高代码复用性。类名命名采用类<a href="http://getbem.com/" target="_blank" rel="external">BEM</a>的方式（开发人员表示不太习惯传统BEM命名，所以进行了改进），在项目开始前，前端开发人员集中对页面进行统一分析，分解为模块并命名。之后添加新类名要与其他开发人员统一确认，并保证无重名。</p>
+<p><strong>引入方式：</strong>放在styles文件夹中，在入口<code>index.js</code>引入</p>
+<p><strong>类BEM命名</strong></p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 主要由三部分组成：块名、元素名、状态</span></div><div class="line"><span class="selector-class">.blockName-elName</span><span class="selector-class">.modifier</span></div><div class="line"></div><div class="line"><span class="comment">// 例</span></div><div class="line"><span class="selector-class">.shopCart</span></div><div class="line"><span class="selector-class">.shopCart-title</span></div><div class="line"><span class="selector-class">.shopCart-item</span></div><div class="line"><span class="selector-class">.shopCart-item</span><span class="selector-class">.selected</span></div><div class="line"></div><div class="line"><span class="selector-class">.menu</span></div><div class="line"><span class="selector-class">.menu-item</span></div><div class="line"><span class="selector-class">.menu-item</span><span class="selector-class">.active</span></div></pre></td></tr></table></figure>
+<h2 id="组件样式"><a href="#组件样式" class="headerlink" title="组件样式"></a>组件样式</h2><p>根据React的组件化开发思想，同时为了避免CSS的全局作用域的影响，对于组件即component的样式，我们采用<code>css-in-js</code>的方案。我们的项目中使用的是<a href="https://www.styled-components.com/" target="_blank" rel="external">styled-components</a>，它是目前 React 样式方案中最受关注的一种，它既具备了 css-in-js 的模块化与参数化优点，又完全使用CSS的书写习惯，不会引起额外的学习成本。    </p>
+<p><strong>Styled-components</strong></p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> styled <span class="keyword">from</span> <span class="string">'styled-components'</span>;</div><div class="line"></div><div class="line"><span class="comment">// Title组件将生成一个字体大小1.5em，居中对齐，红色文字的h1标签</span></div><div class="line"><span class="keyword">const</span> Title = styled.h1<span class="string">`</span></div><div class="line">  font-size: 1.5em;</div><div class="line">  text-align: center;</div><div class="line">  color: red;</div><div class="line">`;</div><div class="line"></div><div class="line"><span class="comment">//Wrapper组件将生成一个内边距为4em，背景颜色为白色的section标签</span></div><div class="line"><span class="keyword">const</span> Wrapper = styled.section<span class="string">`</span></div><div class="line">  padding: 4em;</div><div class="line">  background: white;</div><div class="line">`;</div><div class="line"></div><div class="line"><span class="comment">// 使用方法和正常的React组件一样</span></div><div class="line">&lt;Wrapper&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">Title</span>&gt;</span>Hello World, this is my first styled component!<span class="tag">&lt;/<span class="name">Title</span>&gt;</span></span></div><div class="line">&lt;<span class="regexp">/Wrapper&gt;</span></div></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/12/12/CSS深入理解系列课程笔记/" data-toggle="tooltip" data-placement="top"
+                           title="CSS深入理解系列课程笔记">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQwNC81OTcy">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#样式分类"><span class="toc-text">样式分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公共样式"><span class="toc-text">公共样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三方样式"><span class="toc-text">第三方样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器样式"><span class="toc-text">容器样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组件样式"><span class="toc-text">组件样式</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#React"
+                           title="React">React</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                        <li><a href="http://blog.xiaojay.cn/">xiaoJay</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2018
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
