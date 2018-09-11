@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="杜梦杰在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="杜梦杰" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        [译]基于create-react-app打造代码规范化的React项目｜DuMengjie&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://dumengjie.github.io/2018/09/11/译-基于create-react-app打造代码规范化的React项目/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/basspixel-dark-texture-2.png')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    杜梦杰
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/MY-WORKS/">MY WORKS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogtntkmyf.bkt.clouddn.com/article-bg7.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>[译]基于create-react-app打造代码规范化的React项目</h1>
+                    
+                    <span class="meta">
+                         作者 杜梦杰
+                        <span>
+                          日期 2018-09-11
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#React"
+                           title="React">React</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            [译]基于create-react-app打造代码规范化的React项目
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>原文链接：<a href="https://medium.com/stephenkoo/how-to-set-up-create-react-app-redux-react-router-redux-thunk-prettier-scss-airbnb-eslint-dda0bba5616a" target="_blank" rel="external">https://medium.com/stephenkoo/how-to-set-up-create-react-app-redux-react-router-redux-thunk-prettier-scss-airbnb-eslint-dda0bba5616a</a></p>
+<p>原文标题：Set up create-react-app with: Redux, React Router, Redux Thunk, Prettier, SCSS, Airbnb eslint, Standard stylelint, and CSS modules —— A (very) opinionated guide on setting up Create React App</p>
+<p>原文作者：<a href="https://medium.com/@stephenkoo" target="_blank" rel="external">Stephen Koo</a></p>
+<p>翻译：<a href="https://dumengjie.github.io/">杜梦杰</a></p>
+<p>前言：之前团队内经过讨论和沟通，确定了前端开发规范。规范的执行要由上到下，软硬兼施，除了要求成员们要有自觉性，最好在项目中配置代码规范化/格式化工具。我在配置这些工具时，踩了不少坑，后来有幸看到这篇文章。从头到尾，轻松地将所有工具配置好。本人对于这种规范化的项目比较推崇，拒绝杂乱无章的代码风格，之后的工作中会一直沿用，也推荐大家使用。Keep your code clean!</p>
+</blockquote>
+<p><img src="header.png" alt=""></p>
+<p>这是一篇在<code>create-react-app</code>中配置流行包的参考指南。</p>
+<p>为了正确的安装这些包，我花了数小时来阅读文档和相关文章，写这篇文章的目的是节省大家的时间。</p>
+<p>本指南假定您已经安装了<code>brew</code>、<code>nvm</code>和<code>yarn</code>。（译者注：原作者使用的是yarn，我在注释中写明了对应的npm命令）</p>
+<h2 id="0、安装Create-React-App"><a href="#0、安装Create-React-App" class="headerlink" title="0、安装Create React App"></a>0、安装Create React App</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">yarn global add create-react-app</div><div class="line"><span class="comment">// npm install create-react-app -g</span></div><div class="line">create-react-app your-project-name</div><div class="line">cd react-base</div><div class="line">git init</div></pre></td></tr></table></figure>
+<h2 id="1、配置SCSS"><a href="#1、配置SCSS" class="headerlink" title="1、配置SCSS"></a>1、配置SCSS</h2><ul>
+<li><a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc" target="_blank" rel="external">create-react-app用户指南</a>中的相关内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">yarn add node-sass-chokidar npm-run-all</div><div class="line"><span class="comment">// npm install node-sass-chokidar npm-run-all --save-dev</span></div></pre></td></tr></table></figure>
+<p><code>package.json</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">+    &quot;build-css&quot;: &quot;node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/&quot;,</div><div class="line">+    &quot;watch-css&quot;: &quot;npm run build-css &amp;&amp; node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive&quot;,</div><div class="line">+    &quot;start-js&quot;: &quot;react-scripts start&quot;,</div><div class="line">+    &quot;start&quot;: &quot;npm-run-all -p watch-css start-js&quot;,</div><div class="line">+    &quot;build&quot;: &quot;npm run build-css &amp;&amp; react-scripts build&quot;,</div><div class="line">     &quot;test&quot;: &quot;react-scripts test --env=jsdom&quot;,</div></pre></td></tr></table></figure>
+<p>将 <code>src/App.css</code> 重命名为 <code>src/App.scss</code>。</p>
+<p><code>.gitignore</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+# build products</div><div class="line">+src/**/*.css</div></pre></td></tr></table></figure>
+<h2 id="2、配置Prettier"><a href="#2、配置Prettier" class="headerlink" title="2、配置Prettier"></a>2、配置Prettier</h2><ul>
+<li><a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor" target="_blank" rel="external">create-react-app推荐使用Prettier而不是ESLint</a></li>
+<li><a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#formatting-code-automatically" target="_blank" rel="external">create-react-app用户指南</a>中的相关内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">yarn add husky lint-staged prettier</div><div class="line"><span class="comment">// npm install husky lint-staged prettier --save-dev</span></div></pre></td></tr></table></figure>
+<p>新建<code>.prettierrc</code>文件：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  'singleQuote': true,</div><div class="line">  'trailingComma': 'es5',</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>package.json</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+&quot;lint-staged&quot;: &#123;</div><div class="line">+  &quot;src/**/*.&#123;js,jsx,json,scss,css&#125;&quot;: [</div><div class="line">+    &quot;prettier --config .prettierrc --write&quot;,</div><div class="line">+    &quot;git add&quot;</div><div class="line">+  ]</div><div class="line">+&#125;,</div><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">+    &quot;precommit&quot;: &quot;lint-staged&quot;,</div><div class="line">     &quot;build-css&quot;: &quot;node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/&quot;,</div></pre></td></tr></table></figure>
+<p>使用如下命令格式化整个项目：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">./node_modules/.bin/prettier --config .prettierrc --write &quot;src/**/*.&#123;js,jsx,scss,css&#125;&quot;</div></pre></td></tr></table></figure>
+<p>在<a href="https://github.com/prettier/prettier#editor-integration" target="_blank" rel="external">编辑器</a>中整合<code>Prettier</code>。(译者注：非常推荐安装编辑器插件，1+1&gt;2)</p>
+<h2 id="3、配置eslint和eslint-config-airbnb"><a href="#3、配置eslint和eslint-config-airbnb" class="headerlink" title="3、配置eslint和eslint-config-airbnb"></a>3、配置eslint和eslint-config-airbnb</h2><ul>
+<li><a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="external">eslint-config-airbnb</a>和<a href="https://groundberry.github.io/development/2017/06/11/create-react-app-linting-all-the-things.html" target="_blank" rel="external">Blanca Perello’s article</a>中的相关内容</li>
+</ul>
+<p>查看并安装<code>eslint-config</code>中的所有依赖：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm info &quot;eslint-config-airbnb@latest&quot; peerDependencies</div></pre></td></tr></table></figure>
+<p>可以这样安装（Linux/OSX用户）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">(</div><div class="line">  export PKG=eslint-config-airbnb;</div><div class="line">  npm info &quot;$PKG@latest&quot; peerDependencies --json | command sed &apos;s/[\&#123;\&#125;,]//g ; s/: /@/g&apos; | xargs yarn add --dev &quot;$PKG@latest&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>或（Windows用户）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install -g install-peerdeps</div><div class="line">install-peerdeps --dev eslint-config-airbnb</div></pre></td></tr></table></figure>
+<p>新建<code>.eslintrc.js</code>：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">  'env': &#123;</div><div class="line">    'browser': true,</div><div class="line">    'jest': true,</div><div class="line">    'es6': true,</div><div class="line">    'node': true,</div><div class="line">  &#125;,</div><div class="line">  'extends': [</div><div class="line">    'airbnb',</div><div class="line">    'prettier',</div><div class="line">  ],</div><div class="line">  'plugins': [</div><div class="line">    'prettier',</div><div class="line">  ],</div><div class="line">  'rules': &#123;</div><div class="line">    'prettier/prettier': ['error', &#123;</div><div class="line">      'singleQuote': true,</div><div class="line">      'trailingComma': 'es5'</div><div class="line">    &#125;],</div><div class="line">  &#125;,</div><div class="line">  'parserOptions': &#123;</div><div class="line">    'ecmaFeatures': &#123;</div><div class="line">      'jsx': true,</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>src/registerServiceWorker.js</code>文件开头处添加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ /* eslint-disable no-console, no-param-reassign, no-use-before-define */</div><div class="line">// In production, we register a service worker to serve assets from local cache.</div></pre></td></tr></table></figure>
+<h3 id="检查现有代码"><a href="#检查现有代码" class="headerlink" title="检查现有代码"></a>检查现有代码</h3><p>自动修复一些<code>eslint</code>问题：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">node_modules/.bin/eslint --ext=js --ext=jsx --fix .</div></pre></td></tr></table></figure>
+<p>修改<code>src/index.js</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span>;</div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</div><div class="line"><span class="keyword">import</span> registerServiceWorker <span class="keyword">from</span> <span class="string">'./registerServiceWorker'</span>;</div><div class="line"></div><div class="line">ReactDOM.render(React.createElement(App), <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</div><div class="line">registerServiceWorker();</div></pre></td></tr></table></figure>
+<p><code>src/App.js</code> 重命名为 <code>src/App.jsx</code>并修改：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">'./logo.svg'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</div><div class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> (</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"App"</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"App-header"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;logo&#125;</span> <span class="attr">className</span>=<span class="string">"App-logo"</span> <span class="attr">alt</span>=<span class="string">"logo"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Welcome to React<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">"App-intro"</span>&gt;</span></div><div class="line">      To get started, edit <span class="tag">&lt;<span class="name">code</span>&gt;</span>src/App.js<span class="tag">&lt;/<span class="name">code</span>&gt;</span> and save to reload.</div><div class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">);</div><div class="line">export default App;</div></pre></td></tr></table></figure>
+<p><code>src/App.test.js</code> 重命名为 <code>src/App.test.jsx</code>并修改：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</div><div class="line">it(<span class="string">'renders without crashing'</span>, () =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">  ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span>, div);</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="4、配置stylelint和stylelint-config-standard"><a href="#4、配置stylelint和stylelint-config-standard" class="headerlink" title="4、配置stylelint和stylelint-config-standard"></a>4、配置stylelint和stylelint-config-standard</h2><ul>
+<li><a href="https://www.npmjs.com/package/stylelint-config-standard" target="_blank" rel="external">stylelint-config-standard</a>和<a href="https://groundberry.github.io/development/2017/06/11/create-react-app-linting-all-the-things.html" target="_blank" rel="external">Blanca Perello’s article</a>中的相关内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">yarn add stylelint stylelint-config-standard --dev</div><div class="line"><span class="comment">// npm install stylelint-config-standard --save-dev</span></div></pre></td></tr></table></figure>
+<p>新建<code>.stylelintrc</code>：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  'extends': 'stylelint-config-standard',</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="5、配置eslint和stylelint命令"><a href="#5、配置eslint和stylelint命令" class="headerlink" title="5、配置eslint和stylelint命令"></a>5、配置eslint和stylelint命令</h2><p>修改<code>package.json</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&quot;lint-staged&quot;: &#123;</div><div class="line"> + &quot;src/**/*.&#123;js,jsx,json&#125;&quot;: [</div><div class="line"> +   &quot;eslint --fix&quot;,</div><div class="line"> +   &quot;prettier --config .prettierrc --write&quot;,</div><div class="line"> +   &quot;git add&quot;</div><div class="line"> + ],</div><div class="line"> + &quot;src/**/*.&#123;scss,css&#125;&quot;: [</div><div class="line"> +   &quot;stylelint --config=.stylelintrc --fix&quot;,</div><div class="line"> +   &quot;prettier --config .prettierrc --write&quot;,</div><div class="line"> +   &quot;git add&quot;</div><div class="line"> + ]</div><div class="line">  &#125;,</div><div class="line">  &quot;scripts&quot;: &#123;</div><div class="line">    &quot;precommit&quot;: &quot;lint-staged&quot;,</div><div class="line">    &quot;build-css&quot;: &quot;node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/&quot;,</div><div class="line">    &quot;watch-css&quot;: &quot;npm run build-css &amp;&amp; node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive&quot;,</div><div class="line">    &quot;start-js&quot;: &quot;react-scripts start&quot;,</div><div class="line">    &quot;start&quot;: &quot;npm-run-all -p watch-css start-js&quot;,</div><div class="line">    &quot;build&quot;: &quot;npm run build-css &amp;&amp; react-scripts build&quot;,</div><div class="line">+   &quot;test:lint:js&quot;: &quot;eslint --ext=js --ext=jsx .&quot;,</div><div class="line">+   &quot;test:lint:scss&quot;: &quot;stylelint --config=.stylelintrc &apos;**/*.scss&apos;&quot;,</div><div class="line">+   &quot;test:lint&quot;: &quot;run-s test:lint:**&quot;,</div><div class="line">+   &quot;test:unit&quot;: &quot;react-scripts test --env=jsdom&quot;,</div><div class="line">+   &quot;test&quot;: &quot;run-s test:**&quot;,</div><div class="line">    &quot;eject&quot;: &quot;react-scripts eject&quot;,</div><div class="line">    &quot;eslint-check&quot;: &quot;eslint --print-config .eslintrc.js | eslint-config-prettier-check&quot;</div><div class="line">  &#125;,</div></pre></td></tr></table></figure>
+<h2 id="6、配置Redux、React-Router和Redux-Thunk"><a href="#6、配置Redux、React-Router和Redux-Thunk" class="headerlink" title="6、配置Redux、React Router和Redux Thunk"></a>6、配置Redux、React Router和Redux Thunk</h2><ul>
+<li><a href="https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f" target="_blank" rel="external">Jamie Barton’s article</a>中的相关内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">yarn add redux react-redux react-router-dom react-router-redux@next redux-thunk</div><div class="line"><span class="comment">// npm install react-redux react-router-dom react-router-redux@next redux-thunk --save</span></div></pre></td></tr></table></figure>
+<h2 id="7、配置CSS-Modules"><a href="#7、配置CSS-Modules" class="headerlink" title="7、配置CSS Modules"></a>7、配置CSS Modules</h2><ul>
+<li>警告：本操作需要暴露（eject）<code>create-react-app</code>的配置</li>
+<li><a href="https://medium.com/nulogy/how-to-use-css-modules-with-create-react-app-9e44bec2b5c2" target="_blank" rel="external">nulogy</a>和<a href="https://github.com/webpack-contrib/css-loader#options" target="_blank" rel="external">css-loader</a>中的相关内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">yarn eject</div><div class="line"><span class="comment">// npm eject</span></div><div class="line">yarn install</div><div class="line"><span class="comment">// npm install</span></div></pre></td></tr></table></figure>
+<p>修改<code>config/webpack.config.dev.js</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  loader: require.resolve(&apos;css-loader&apos;),</div><div class="line">  options: &#123;</div><div class="line">    importLoaders: 1,</div><div class="line">+   modules: true,</div><div class="line">+   localIdentName: &quot;[name]__[local]--[hash:base64:5]&quot;</div><div class="line">  &#125;,</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>修改<code>config/webpack.config.prod.js</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  loader: require.resolve(&apos;css-loader&apos;),</div><div class="line">  options: &#123;</div><div class="line">    importLoaders: 1,</div><div class="line">+   modules: true,</div><div class="line">    minimize: true,</div><div class="line">    sourceMap: true,</div><div class="line">   &#125;,</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<h3 id="修正现有CSS路径"><a href="#修正现有CSS路径" class="headerlink" title="修正现有CSS路径"></a>修正现有CSS路径</h3><p>删除css/scss文件类名中的 ‘-’ 。</p>
+<p>修改 <code>src/App.jsx</code> ：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">'./logo.svg'</span>;</div><div class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">'./App.css'</span>;</div><div class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> (</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.App&#125;</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.header&#125;</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;logo&#125;</span> <span class="attr">className</span>=<span class="string">&#123;styles.logo&#125;</span> <span class="attr">alt</span>=<span class="string">'logo'</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Welcome to React<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&#123;styles.intro&#125;</span>&gt;</span></div><div class="line">      To get started, edit <span class="tag">&lt;<span class="name">code</span>&gt;</span>src/App.js<span class="tag">&lt;/<span class="name">code</span>&gt;</span> and save to reload.</div><div class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">);</div><div class="line">export default App;</div></pre></td></tr></table></figure>
+<h2 id="最终成果"><a href="#最终成果" class="headerlink" title="最终成果"></a>最终成果</h2><p>最终成果在下面两个Github仓库中：</p>
+<ul>
+<li><a href="https://github.com/stephenkoo/react-base" target="_blank" rel="external">未配置CSS modules版本</a></li>
+<li><a href="https://github.com/stephenkoo/react-base/tree/eject-add-css-modules" target="_blank" rel="external">配置CSS modules版本</a></li>
+</ul>
+<h2 id="其他一些有用的包"><a href="#其他一些有用的包" class="headerlink" title="其他一些有用的包"></a>其他一些有用的包</h2><p>你可能会用到下面的一些包：</p>
+<ul>
+<li><a href="https://github.com/facebook/immutable-js/" target="_blank" rel="external">Immutable.js</a></li>
+<li><a href="https://github.com/reactjs/reselect" target="_blank" rel="external">reselect</a></li>
+<li><a href="https://github.com/paularmstrong/normalizr" target="_blank" rel="external">normalizr</a></li>
+<li><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-flow" target="_blank" rel="external">flow</a></li>
+<li><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#getting-started-with-storybook" target="_blank" rel="external">storybook</a></li>
+<li><a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#getting-started-with-styleguidist" target="_blank" rel="external">styleguidist</a></li>
+</ul>
+<p>下面列出了create-react-app已使用的包（eject后可以看到）做参考，不要重复安装：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">“autoprefixer”: “7.1.2”,</div><div class="line">“babel-core”: “6.25.0”,</div><div class="line">“babel-eslint”: “7.2.3”,</div><div class="line">“babel-jest”: “20.0.3”,</div><div class="line">“babel-loader”: “7.1.1”,</div><div class="line">“babel-preset-react-app”: “^3.0.2”,</div><div class="line">“babel-runtime”: “6.26.0”,</div><div class="line">“case-sensitive-paths-webpack-plugin”: “2.1.1”,</div><div class="line">“chalk”: “1.1.3”,</div><div class="line">“css-loader”: “0.28.4”,</div><div class="line">“dotenv”: “4.0.0”,</div><div class="line">“eslint”: “4.4.1”,</div><div class="line">“eslint-config-react-app”: “².0.0”,</div><div class="line">“eslint-loader”: “1.9.0”,</div><div class="line">“eslint-plugin-flowtype”: “2.35.0”,</div><div class="line">“eslint-plugin-import”: “2.7.0”,</div><div class="line">“eslint-plugin-jsx-a11y”: “5.1.1”,</div><div class="line">“eslint-plugin-react”: “7.1.0”,</div><div class="line">“extract-text-webpack-plugin”: “3.0.0”,</div><div class="line">“file-loader”: “0.11.2”,</div><div class="line">“fs-extra”: “3.0.1”,</div><div class="line">“html-webpack-plugin”: “2.29.0”,</div><div class="line">“jest”: “20.0.4”,</div><div class="line">“object-assign”: “4.1.1”,</div><div class="line">“postcss-flexbugs-fixes”: “3.2.0”,</div><div class="line">“postcss-loader”: “2.0.6”,</div><div class="line">“promise”: “8.0.1”,</div><div class="line">“react”: “^15.6.1”,</div><div class="line">“react-dev-utils”: “⁴.0.1”,</div><div class="line">“react-dom”: “^15.6.1”,</div><div class="line">“style-loader”: “0.18.2”,</div><div class="line">“sw-precache-webpack-plugin”: “0.11.4”,</div><div class="line">“url-loader”: “0.5.9”,</div><div class="line">“webpack”: “3.5.1”,</div><div class="line">“webpack-dev-server”: “2.7.1”,</div><div class="line">“webpack-manifest-plugin”: “1.2.1”,</div><div class="line">“whatwg-fetch”: “2.0.3”</div></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/09/04/React项目样式管理规范/" data-toggle="tooltip" data-placement="top"
+                           title="React项目样式管理规范">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQwNC81OTcy">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0、安装Create-React-App"><span class="toc-text">0、安装Create React App</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1、配置SCSS"><span class="toc-text">1、配置SCSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、配置Prettier"><span class="toc-text">2、配置Prettier</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、配置eslint和eslint-config-airbnb"><span class="toc-text">3、配置eslint和eslint-config-airbnb</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#检查现有代码"><span class="toc-text">检查现有代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、配置stylelint和stylelint-config-standard"><span class="toc-text">4、配置stylelint和stylelint-config-standard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、配置eslint和stylelint命令"><span class="toc-text">5、配置eslint和stylelint命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、配置Redux、React-Router和Redux-Thunk"><span class="toc-text">6、配置Redux、React Router和Redux Thunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、配置CSS-Modules"><span class="toc-text">7、配置CSS Modules</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修正现有CSS路径"><span class="toc-text">修正现有CSS路径</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最终成果"><span class="toc-text">最终成果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他一些有用的包"><span class="toc-text">其他一些有用的包</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端"
+                           title="前端">前端</a>
+                        
+                        <a class="tag" href="/tags/#React"
+                           title="React">React</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jyoung.im/">JYoung</a></li>
+                        
+                        <li><a href="http://blog.xiaojay.cn/">xiaoJay</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/du-meng-jie-33">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dumengjie2016">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/DuMengjie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杜梦杰 2018
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://dumengjie.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogtntkmyf.bkt.clouddn.com/avatar.jpg">
+</body>
+
+</html>
